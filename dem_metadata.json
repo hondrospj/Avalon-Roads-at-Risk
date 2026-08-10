@@ -1,0 +1,45 @@
+{
+  "name": "Roads at Risk - Avalon DEM",
+  "source": "USGS 3DEP Bare Earth DEM Dynamic ImageServer",
+  "sourceUrl": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+  "sourceDescription": "USGS 3D Elevation Program (3DEP) Bare Earth DEM Dynamic service, retrieved for the Roads at Risk municipal rollout.",
+  "downloadedAt": "2026-08-10",
+  "processing": "Exported from USGS 3DEP at municipal extent, masked to the Avalon Borough boundary, adaptively resampled to 6.2 ft pixels to keep the browser-delivered raster within operational size limits, and compressed as a Cloud Optimized GeoTIFF.",
+  "horizontalCrs": "EPSG:3857",
+  "verticalUnits": "meters",
+  "displayElevationUnits": "feet",
+  "pixelSizeMeters": 1.8907970411161337,
+  "pixelSizeFeet": 6.203402365841767,
+  "adaptiveResolution": true,
+  "width": 3752,
+  "height": 4266,
+  "nodata": -999999,
+  "minMeters": -1.637,
+  "maxMeters": 11.697,
+  "meanMeters": 0.941,
+  "stdDevMeters": 1.432,
+  "minFeet": -5.370734908115001,
+  "maxFeet": 38.375984251815,
+  "webMercatorBounds": [
+    -8323064.843908,
+    4730593.352384598,
+    -8315970.573409732,
+    4738659.492562
+  ],
+  "leafletBounds": [
+    [
+      39.0622688,
+      -74.7673636
+    ],
+    [
+      39.118497,
+      -74.7036459
+    ]
+  ],
+  "files": {
+    "demCog": "avalon_dem_5ft_cog.tif",
+    "hillshadeCog": "avalon_hillshade_cog.tif",
+    "hillshadePng": "avalon_hillshade.png",
+    "boundaryGeojson": "avalon_boundary.geojson"
+  }
+}
