@@ -1,6 +1,6 @@
 {
   "schema": "roads-at-risk-flood-stats-v2",
-  "generatedAt": "2026-11-04T14:26:52.549Z",
+  "generatedAt": "2026-11-05T14:27:23.045Z",
   "gaugeName": "Avalon",
   "station": {
     "usgsGaugeId": "01411355",
@@ -11,11 +11,11 @@
   },
   "archive": {
     "startDate": "2007-10-01",
-    "endDate": "2026-11-04",
-    "days": 6749,
+    "endDate": "2026-11-05",
+    "days": 6750,
     "years": 18.48,
     "classificationCounts": {
-      "none": 6291,
+      "none": 6292,
       "minor": 417,
       "moderate": 35,
       "major": 6
@@ -2174,7 +2174,6 @@
     2.17,
     2.17,
     2.17,
-    2.17,
     2.18,
     2.18,
     2.18,
@@ -3578,6 +3577,7 @@
     2.49,
     2.49,
     2.49,
+    2.49,
     2.5,
     2.5,
     2.5,
@@ -4080,6 +4080,7 @@
     2.6,
     2.6,
     2.6,
+    2.61,
     2.61,
     2.61,
     2.61,
@@ -47378,8 +47379,14 @@
     },
     {
       "date": "2026-11-04",
-      "peakNavd88Ft": 2.17,
-      "peakMllwFt": 4.75,
+      "peakNavd88Ft": 2.61,
+      "peakMllwFt": 5.19,
+      "classification": "none"
+    },
+    {
+      "date": "2026-11-05",
+      "peakNavd88Ft": 2.49,
+      "peakMllwFt": 5.07,
       "classification": "none"
     }
   ],
@@ -47389,11 +47396,11 @@
     "datum": "NAVD88",
     "units": "ft",
     "timeZone": "America/New_York",
-    "fetchedAtUtc": "2026-11-04T14:26:52.549Z",
-    "latestObservationUtc": "2026-11-04T14:12:00.000Z",
+    "fetchedAtUtc": "2026-11-05T14:27:23.045Z",
+    "latestObservationUtc": "2026-11-05T14:12:00.000Z",
     "source": "USGS continuous API; WaterServices fallback",
     "sourceUrl": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?monitoring_location_id=USGS-01411355&parameter_code=72279",
     "method": "Local-calendar daily maxima; stored maxima retained on overlap; existing tide/trend calibration unchanged",
-    "observationsFetched": 863
+    "observationsFetched": 1103
   }
 }
