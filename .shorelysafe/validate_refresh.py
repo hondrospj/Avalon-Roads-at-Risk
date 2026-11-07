@@ -85,4 +85,4 @@ def status(root, app, source_commit, facts, paths, published_files):
         if p.is_file():
             source[name] = {'source_sha256': hashlib.sha256(p.read_bytes()).hexdigest(), 'published_sha256': published_files[name]['sha256'], 'bytes': published_files[name]['size']}
     repository = os.environ.get('GITHUB_REPOSITORY', '')
-    return {'schema': 'shorelysafe-daily-refresh-v1', 'town': 'avalon', 'app_id': app, 'cadence_hours': 24, 'refreshed_at_utc': dt.datetime.now(UTC).isoformat().replace('+00:00', 'Z'), 'repository': repository, 'source_commit': source_commit, 'run_url': 'https://github.com/' + repository + '/actions/runs/' + os.environ.get('GITHUB_RUN_ID', ''), 'source': facts, 'payloads': source}
+    return {'schema': 'shorelysafe-six-hour-refresh-v1', 'town': 'avalon', 'app_id': app, 'cadence_hours': 6, 'refreshed_at_utc': dt.datetime.now(UTC).isoformat().replace('+00:00', 'Z'), 'repository': repository, 'source_commit': source_commit, 'run_url': 'https://github.com/' + repository + '/actions/runs/' + os.environ.get('GITHUB_RUN_ID', ''), 'source': facts, 'payloads': source}
