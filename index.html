@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Roads at Risk - Avalon</title>
+  <title>Road Risk</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2360a5fa'/%3E%3Cpath d='M14 40h36M18 30h28M24 20h18' stroke='%230b1220' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E" />
 
   <link
@@ -31,18 +31,12 @@
       --text:#f2f7ff;
       --muted:#97a8c4;
       --accent:#4fb3ff;
-      --accent2:#20d8e8;
-      --risk:#fb7185;
       --minor:#f59e0b;
       --moderate:#f43f5e;
       --major:#8b5cf6;
-      --warn:#fbbf24;
-      --ok:#34d399;
-      --ink:#07111f;
       --shadow:0 10px 26px rgba(5,10,20,.28);
       --right-rail:448px;
       --ui-gap:16px;
-      --cross-section-h:clamp(292px, 30vh, 340px);
     }
 
     *{box-sizing:border-box}
@@ -112,69 +106,6 @@
       font-weight:950;
     }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 9px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      color:#dbeafe;
-      font-size:11px;
-      font-weight:900;
-      white-space:nowrap;
-    }
-
-    .dot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background:var(--ok);
-      box-shadow:0 0 0 4px rgba(52,211,153,.18);
-    }
-
-    .leftPanel,
-    .rightPanel{
-      pointer-events:auto;
-      position:absolute;
-      width:var(--right-rail);
-      display:grid;
-      gap:10px;
-    }
-
-    .leftPanel{
-      top:calc(50% - 8px);
-      right:var(--ui-gap);
-      transform:translateY(-50%);
-      max-height:calc(100vh - var(--cross-section-h) - 56px);
-      overflow:auto;
-    }
-
-    .rightPanel{
-      top:var(--ui-gap);
-      right:var(--ui-gap);
-      max-height:calc(50vh - 20px);
-      overflow:visible;
-    }
-
-    .bottomPanel{
-      pointer-events:auto;
-      left:auto;
-      right:var(--ui-gap);
-      bottom:var(--ui-gap);
-      width:min(860px, calc(48vw - 20px));
-      min-width:640px;
-      height:var(--cross-section-h);
-      padding:10px;
-      position:absolute;
-      border-radius:10px;
-      background:rgba(15,23,42,.90);
-      border:1px solid rgba(255,255,255,.13);
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-    }
-
     .panelBlock{
       border-radius:10px;
       border:1px solid rgba(255,255,255,.13);
@@ -186,16 +117,6 @@
     }
 
     .panelBlock:last-child{margin-bottom:0}
-
-    .panelTitle{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin:0 0 8px;
-      font-size:14px;
-      font-weight:950;
-    }
 
     .pill{
       display:inline-flex;
@@ -211,26 +132,7 @@
       white-space:nowrap;
     }
 
-    .buttonGrid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:7px;
-    }
-
-    .leftPanel .buttonGrid{
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:6px;
-    }
-
-    .leftPanel .buttonGrid button{
-      min-height:32px;
-      padding:5px 4px;
-      font-size:10px;
-      line-height:1.05;
-    }
-
-    button,
-    .fileLink{
+    button{
       appearance:none;
       border:1px solid rgba(147,197,253,.36);
       background:rgba(96,165,250,.14);
@@ -248,8 +150,7 @@
       text-align:center;
     }
 
-    button:hover,
-    .fileLink:hover{filter:brightness(1.08)}
+    button:hover{filter:brightness(1.08)}
     button.active{
       color:#082f49;
       background:#7dd3fc;
@@ -272,7 +173,6 @@
       letter-spacing:.04em;
     }
 
-    input[type="range"],
     input[type="number"]{
       width:100%;
       accent-color:var(--accent);
@@ -286,67 +186,6 @@
       background:rgba(2,6,23,.45);
       color:#f8fbff;
       font:900 14px ui-sans-serif,system-ui;
-    }
-
-    .inputRow{
-      display:grid;
-      grid-template-columns:1fr 82px;
-      gap:8px;
-      align-items:center;
-    }
-
-    .presetGrid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:7px;
-    }
-
-    .basemapGrid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:7px;
-    }
-
-    .basemapGrid button{
-      min-height:34px;
-      padding:7px 6px;
-      font-size:11px;
-    }
-
-    .presetGrid button{
-      min-height:36px;
-      padding:8px 6px;
-      font-size:11px;
-    }
-
-    .presetGrid button.minor{border-color:rgba(245,158,11,.44);background:rgba(245,158,11,.13);color:#fde68a}
-    .presetGrid button.moderate{border-color:rgba(244,63,94,.46);background:rgba(244,63,94,.13);color:#fecdd3}
-    .presetGrid button.major{border-color:rgba(139,92,246,.50);background:rgba(139,92,246,.16);color:#ddd6fe}
-
-    .rangeRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-top:7px;
-      color:#dbeafe;
-      font-size:13px;
-      font-weight:900;
-    }
-
-    .helpText{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
-      margin:8px 0 0;
-    }
-
-    .sourceLine,
-    .mutedLine{
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.35;
-      margin:8px 0 0;
     }
 
     .statGrid{
@@ -381,36 +220,11 @@
       line-height:1.1;
     }
 
-    .stat.wide{grid-column:1 / -1}
-
-    .miniStats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:7px;
-    }
-
-    .miniStat{
-      min-height:52px;
-      padding:8px;
-      border-radius:10px;
-      background:rgba(2,6,23,.32);
-      border:1px solid rgba(255,255,255,.10);
-    }
-
-    .miniStat .k,
     .metricRow .k{
       color:#9fb0d1;
       font-size:10px;
       line-height:1.2;
       text-transform:uppercase;
-      font-weight:950;
-    }
-
-    .miniStat .v{
-      margin-top:5px;
-      color:#eef6ff;
-      font-size:16px;
-      line-height:1.1;
       font-weight:950;
     }
 
@@ -469,27 +283,6 @@
       text-transform:uppercase;
     }
 
-    .legend{
-      display:grid;
-      gap:6px;
-      color:#dbeafe;
-      font-size:12px;
-      font-weight:800;
-    }
-
-    .legendRow{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .swatch{
-      width:12px;
-      height:12px;
-      border-radius:999px;
-      display:inline-block;
-    }
-
     .chartHeader{
       display:flex;
       align-items:center;
@@ -528,12 +321,27 @@
       margin:0 0 6px;
     }
 
-    .tinyChartLabel .chartKey{
-      min-height:0;
-      margin:0;
-      justify-content:flex-end;
-      flex:1 1 auto;
+    .chartData{
+      flex:0 0 auto;
+      min-width:0;
+      margin-top:8px;
+      border-top:1px solid var(--line);
+      color:var(--text);
+      font-size:12px;
     }
+    .chartData summary{cursor:pointer;padding:10px 2px;font-weight:750}
+    .chartDataControls{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin:4px 0 8px}
+    .chartDataControls label{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;min-width:0;max-width:100%;font-size:12px;text-transform:none;letter-spacing:0}
+    .chartDataControls select{max-width:100%;width:auto;min-height:36px}
+    .chartDataControls input{width:7em;min-height:36px}
+    .chartDataControls button{min-height:36px}
+    .chartDataScroll{max-height:210px;overflow:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:6px}
+    .chartData table{width:100%;border-collapse:collapse;font-size:12px;text-align:left}
+    .chartData caption{padding:8px;text-align:left;font-weight:700}
+    .chartData th,.chartData td{padding:7px 8px;border-top:1px solid var(--line);vertical-align:top;white-space:normal}
+    .chartData th{color:#c7d8ee}
+    .chartData p{line-height:1.45}
+    .thresholdInputRow .stageFieldLabel{grid-column:1 / -1;font-size:11px;line-height:1.3;text-transform:none;letter-spacing:0}
 
     .keyToggle{
       display:inline-flex;
@@ -580,6 +388,13 @@
       opacity:.48;
     }
 
+    .keyToggle input,
+    .keyToggle .keySwatch{flex-shrink:0}
+    .keyToggle > span:last-child{min-width:0;overflow-wrap:anywhere;white-space:normal}
+    .mobileToolNav button,
+    .thresholdCompact > button,
+    .scenarioRow > button{overflow-wrap:anywhere;white-space:normal}
+
     .keySwatch{
       width:18px;
       height:4px;
@@ -616,13 +431,6 @@
       width:100%;
     }
 
-    .bottomGrid{
-      height:100%;
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 248px;
-      gap:10px;
-    }
-
     .profilePane,
     .floodPane{
       min-width:0;
@@ -642,17 +450,6 @@
       border-left:1px solid rgba(255,255,255,.12);
     }
 
-    .tinyChartLabel{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      margin:4px 0 3px;
-      color:#eaf3ff;
-      font-size:11px;
-      font-weight:950;
-    }
-
     .tinyChartWrap{
       height:clamp(42px, 5vh, 58px);
       width:100%;
@@ -660,22 +457,6 @@
 
     .floodCharts{
       margin-bottom:0;
-    }
-
-    .floodSummary{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:6px;
-      margin-bottom:6px;
-    }
-
-    .floodSummary .miniStat{
-      min-height:38px;
-      padding:6px;
-    }
-
-    .floodSummary .miniStat .v{
-      font-size:13px;
     }
 
     .mapControl{
@@ -691,7 +472,6 @@
     @media (min-width: 1500px) and (min-height: 820px){
       :root{
         --right-rail:340px;
-        --cross-section-h:clamp(310px, 29vh, 340px);
       }
 
       .titleBar{
@@ -704,23 +484,6 @@
         top:18px;
         right:var(--ui-gap);
         width:var(--right-rail);
-      }
-
-      .rightPanel{
-        top:82px;
-        width:var(--right-rail);
-      }
-
-      .leftPanel{
-        top:auto;
-        bottom:calc(var(--cross-section-h) + 32px);
-        width:var(--right-rail);
-        transform:none;
-      }
-
-      .bottomPanel{
-        width:min(860px, calc(44vw - 16px));
-        min-width:760px;
       }
     }
 
@@ -767,11 +530,6 @@
       font-size:12px;
     }
 
-    .thresholdCompact input[type="range"]{
-      grid-column:1 / -1;
-      min-width:0;
-    }
-
     .uncertaintyInline{
       display:none;
       grid-template-columns:auto minmax(0,1fr);
@@ -787,15 +545,6 @@
       padding:4px 5px;
       font-size:11px;
       text-align:center;
-    }
-
-    .modelNote{
-      min-height:12px;
-      margin:2px 0 0;
-      color:#b7c7e5;
-      font-size:9px;
-      line-height:1.25;
-      font-weight:800;
     }
 
     .leaflet-control-zoom{
@@ -863,22 +612,11 @@
     .popupStats strong{color:#f8fafc}
     .popupStats .tiny{color:#aab8ce;font-size:11px}
 
-    @media (max-width: 1180px){
+    @media (max-width: 1180px), (max-height: 520px){
       html,body{overflow:auto;height:auto;min-height:100%}
       #map{position:relative;height:58vh;min-height:420px}
-      .shell{
-        pointer-events:auto;
-        position:relative;
-        display:grid;
-        gap:10px;
-        padding:10px;
-        background:#0b1220;
-      }
       .titleBar,
-      .mapControl,
-      .leftPanel,
-      .rightPanel,
-      .bottomPanel{
+      .mapControl{
         position:relative;
         inset:auto;
         left:auto;
@@ -898,21 +636,16 @@
         width:auto;
       }
       h1{font-size:28px;white-space:normal}
-      .bottomPanel{min-height:260px}
-      .bottomGrid{grid-template-columns:1fr}
       .floodPane{padding-left:0;border-left:0;border-top:1px solid rgba(255,255,255,.12);padding-top:10px}
       .chartWrap{height:216px;min-height:216px}
-      .thresholdCompact input[type="range"]{grid-column:1 / -1}
       .uncertaintyInline{grid-column:1 / -1;grid-template-columns:auto 92px;justify-content:end}
       .tinyChartWrap{height:170px}
-      .miniStats{grid-template-columns:1fr 1fr}
     }
 
     :root{
       --right-rail:clamp(490px, 35vw, 616px);
       --ui-gap:16px;
       --map-control-h:72px;
-      --map-tilt:54deg;
       --panel-radius:10px;
     }
 
@@ -943,12 +676,6 @@
     .eyebrow{
       margin-bottom:3px;
       letter-spacing:.08em;
-    }
-
-    .badge{
-      min-height:24px;
-      padding:4px 9px;
-      font-size:10px;
     }
 
     .mapControl{
@@ -1058,7 +785,6 @@
       min-width:0;
     }
 
-    .iconBtn,
     .expandBtn{
       width:32px;
       min-width:32px;
@@ -1190,29 +916,10 @@
       margin-bottom:6px;
     }
 
-    .floodSummary{
-      display:none;
-    }
-
-    .floodSummary .miniStat{
-      min-height:38px;
-      padding:6px 7px;
-      border-radius:9px;
-    }
-
-    .tinyChartLabel{
-      margin:3px 0 2px;
-      font-size:10px;
-    }
-
     .tinyChartWrap{
       flex:1 1 96px;
       min-height:92px;
       height:auto;
-    }
-
-    .modelNote{
-      display:none;
     }
 
     .exportPane{
@@ -1272,7 +979,7 @@
     }
 
     .lineUtility{
-      display:none;
+      display:grid;
       grid-template-columns:1fr 1fr;
       gap:6px;
     }
@@ -1306,6 +1013,8 @@
       font-size:11px;
       font-weight:900;
     }
+
+    .savedLineWarning{grid-column:1 / -1;margin:0;color:#fecdd3;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
 
     .savedLine button{
       min-height:26px;
@@ -1438,22 +1147,19 @@
       gap:12px;
     }
 
-    .shell.paneExpanded .compactStats .stat,
-    .shell.paneExpanded .floodSummary .miniStat{
+    .shell.paneExpanded .compactStats .stat{
       min-height:82px;
       padding:13px 15px;
       border-radius:11px;
     }
 
     .shell.paneExpanded .stat .k,
-    .shell.paneExpanded .miniStat .k,
     .shell.paneExpanded .metricRow .k{
       font-size:13px;
       line-height:1.25;
     }
 
-    .shell.paneExpanded .stat .v,
-    .shell.paneExpanded .miniStat .v{
+    .shell.paneExpanded .stat .v{
       margin-top:8px;
       font-size:clamp(24px, 2.1vw, 34px);
     }
@@ -1506,10 +1212,6 @@
       padding:10px 13px;
       font-size:16px;
       border-radius:10px;
-    }
-
-    .shell.paneExpanded input[type="range"]{
-      min-height:32px;
     }
 
     .shell.paneExpanded .chartHeader{
@@ -1580,11 +1282,6 @@
       margin-bottom:14px;
     }
 
-    .shell.paneExpanded .tinyChartLabel{
-      margin:9px 0 6px;
-      font-size:15px;
-    }
-
     .shell.paneExpanded .exportPane{
       min-height:100%;
     }
@@ -1631,19 +1328,14 @@
       gap:10px;
     }
 
-    @media (max-height: 760px) and (min-width: 1181px){
+    @media (max-height: 760px) and (min-width: 1181px) and (min-height: 521px){
       .mapControl{padding:8px}
       .pointStrip{display:none}
       .metricRows{grid-template-columns:1fr 1fr}
       .thresholdCompact{margin-top:6px}
       .floodHistoryPane .toolTitleRow{margin-bottom:6px}
-      .floodHistoryPane .tinyChartLabel{margin:2px 0}
-      .modelNote,
-      .lineUtility,
       .exportStatus{display:none}
       .shell.paneExpanded .exportPane .lineUtility{display:grid}
-      .annualChartWrap{flex:1 1 70px;min-height:70px}
-      .shell.paneExpanded .floodHistoryPane .annualChartWrap{min-height:0}
       .exportPane{padding:8px}
       .exportColumn{gap:5px}
       .exportColumnTitle{font-size:11px}
@@ -1651,13 +1343,13 @@
       .lineForm input,
       .lineForm button,
       .exportActions button{min-height:28px;padding:5px 6px}
-      .savedLineList{max-height:24px;overflow:hidden;gap:4px}
+      .savedLineList{max-height:min(240px,30vh);overflow:auto;gap:4px}
       .emptySaved{display:none}
       .savedLine{padding:3px 4px;gap:4px}
       .savedLine button{min-height:18px;padding:2px 5px}
     }
 
-    @media (max-width: 1180px){
+    @media (max-width: 1180px), (max-height: 520px){
       #map{
         position:relative;
         inset:auto;
@@ -1743,7 +1435,7 @@
       }
     }
 
-    /* Avalon Floodmapper visual palette */
+    /* Floodmapper visual palette */
     :root{
       --bg:#0b1220;
       --panel:rgba(11,18,32,.88);
@@ -1755,15 +1447,10 @@
       --accent:#60a5fa;
       --accent-soft:rgba(96,165,250,.14);
       --accent-strong:#bfdbfe;
-      --accent2:#2dd4bf;
-      --risk:#d84b67;
       --minor:#d58a00;
       --moderate:#d84b67;
       --major:#7c5ce0;
-      --warn:#d58a00;
-      --ok:#2dd4bf;
       --below:#63d471;
-      --ink:#0b1220;
       --shadow:0 22px 70px rgba(0,0,0,.40);
     }
 
@@ -1772,7 +1459,6 @@
       border-color:var(--line);
     }
 
-    .bottomPanel,
     .panelBlock,
     .toolPane,
     .stat{
@@ -1780,7 +1466,6 @@
       border-color:var(--line);
     }
 
-    .miniStat,
     .metricRow,
     .compactStats .stat,
     .savedLine,
@@ -1799,38 +1484,26 @@
       border-color:rgba(191,219,254,.30);
     }
 
-    .badge,
-    .rangeRow,
-    .legend,
-    .tinyChartLabel,
     .mapControlHeader,
     .toolTitle,
     .exportColumnTitle{
       color:var(--text);
     }
 
-    .miniStat .k,
     .metricRow .k,
-    .modelNote,
     .emptySaved,
     .exportStatus,
     .popupStats .tiny{
       color:var(--muted);
     }
 
-    .miniStat .v,
     .metricRow .v,
     .savedLineName,
     .popupStats strong{
       color:var(--text);
     }
 
-    .dot{
-      box-shadow:0 0 0 4px rgba(45,212,191,.18);
-    }
-
-    button,
-    .fileLink{
+    button{
       border-color:var(--line);
       background:rgba(255,255,255,.05);
       color:var(--text);
@@ -1865,21 +1538,18 @@
       color:var(--text);
     }
 
-    .presetGrid button.minor,
     .thresholdCompact button.minor{
       border-color:rgba(213,138,0,.42);
       background:rgba(213,138,0,.16);
       color:#f7d898;
     }
 
-    .presetGrid button.moderate,
     .thresholdCompact button.moderate{
       border-color:rgba(216,75,103,.42);
       background:rgba(216,75,103,.16);
       color:#f8c7d1;
     }
 
-    .presetGrid button.major,
     .thresholdCompact button.major{
       border-color:rgba(124,92,224,.44);
       background:rgba(124,92,224,.18);
@@ -1961,7 +1631,7 @@
       outline-offset:2px;
     }
 
-    @media (max-width: 1180px){
+    @media (max-width: 1180px), (max-height: 520px){
       html,
       body{
         width:100%;
@@ -2052,12 +1722,6 @@
       h1{
         font-size:clamp(24px, 7vw, 29px);
         line-height:1.05;
-      }
-
-      .badge{
-        min-height:30px;
-        padding:6px 10px;
-        font-size:12px;
       }
 
       .mapControl,
@@ -2256,11 +1920,6 @@
         touch-action:pan-y;
       }
 
-      .tinyChartLabel{
-        font-size:14px;
-        line-height:1.3;
-      }
-
       .lineForm{
         grid-template-columns:minmax(0,1fr) 76px;
         gap:8px;
@@ -2293,8 +1952,7 @@
         font-size:13px;
       }
 
-      .exportStatus,
-      .modelNote{
+      .exportStatus{
         font-size:13px;
         line-height:1.45;
       }
@@ -2413,7 +2071,7 @@
       }
     }
 
-    @media (max-width: 1180px) and (max-height: 520px){
+    @media (max-height: 520px){
       #map{
         height:56vh;
         height:56svh;
@@ -2459,7 +2117,7 @@
     }
 
     /* Unified tablet/mobile workspace: readable cards, no rail collisions. */
-    @media (max-width: 1180px){
+    @media (max-width: 1180px), (max-height: 520px){
       body{
         background:#07111f;
       }
@@ -2576,8 +2234,7 @@
       }
 
       .chartHeader,
-      .chartKey,
-      .tinyChartLabel{
+      .chartKey{
         flex-wrap:wrap;
       }
 
@@ -2623,15 +2280,6 @@
 
       .titleBar h1{
         font-size:clamp(22px,7vw,28px);
-      }
-
-      .badge{
-        max-width:112px;
-        text-align:center;
-      }
-
-      .mapModes{
-        grid-template-columns:repeat(3,minmax(0,1fr));
       }
 
       .crossSectionPane .toolTitleRow{
@@ -2694,7 +2342,6 @@
     }
 
     button,
-    .fileLink,
     input[type="number"],
     .lineForm input,
     .exportFormatRow select{
@@ -2740,12 +2387,6 @@
       font-size:clamp(30px, 2.4vw, 40px);
       line-height:1.02;
       letter-spacing:-.035em;
-    }
-
-    .badge{
-      min-height:30px;
-      padding:6px 11px;
-      font-size:12px;
     }
 
     .mapControl{
@@ -2802,13 +2443,11 @@
 
     .titleDatumToggle button,
     .drawAction,
-    .iconBtn,
     .expandBtn{
       min-height:38px;
       font-size:12px;
     }
 
-    .iconBtn,
     .expandBtn{
       width:40px;
       min-width:40px;
@@ -2828,7 +2467,6 @@
     }
 
     .stat .k,
-    .miniStat .k,
     .metricRow .k{
       color:var(--muted);
       font-size:11px;
@@ -2911,11 +2549,6 @@
       font-size:13px;
     }
 
-    .tinyChartLabel{
-      margin:6px 0 4px;
-      font-size:13px;
-    }
-
     .tinyChartWrap{
       min-height:180px;
     }
@@ -2936,10 +2569,14 @@
       font-size:13px;
     }
 
-    .exportStatus,
-    .modelNote{
-      display:none;
+    .exportStatus, .calcNote{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.4;
+      margin:6px 0 0;
     }
+    .calcNote:empty{ display:none; }
 
     .leaflet-control-zoom a{
       width:40px !important;
@@ -2948,7 +2585,7 @@
       font-size:22px !important;
     }
 
-    @media (min-width:1181px) and (max-height:860px){
+    @media (min-width:1181px) and (min-height:521px) and (max-height:860px){
       :root{
         --right-rail:clamp(620px, 43vw, 700px);
         --map-control-h:112px;
@@ -2961,7 +2598,7 @@
       }
     }
 
-    @media (max-width:1180px){
+    @media (max-width:1180px), (max-height:520px){
       :root{
         --ui-gap:12px;
       }
@@ -3123,13 +2760,6 @@
         white-space:normal;
       }
 
-      .badge{
-        max-width:none;
-        min-height:30px;
-        padding:5px 8px;
-        font-size:11px;
-      }
-
       .mapModes{
         grid-template-columns:repeat(3,minmax(0,1fr));
       }
@@ -3205,8 +2835,7 @@
       }
 
       .chartHeader,
-      .chartKey,
-      .tinyChartLabel{
+      .chartKey{
         align-items:flex-start;
       }
 
@@ -3277,10 +2906,6 @@
 
       .titleBar h1{
         font-size:24px;
-      }
-
-      .badge{
-        font-size:10px;
       }
 
       .compactStats .stat .k{
@@ -3696,7 +3321,7 @@
     }
 
     /* Keep the desktop tool rail inside Safari/macOS viewports. */
-    @media (min-width:1181px){
+    @media (min-width:1181px) and (min-height:521px){
       .rightStack{
         max-width:calc(100vw - (var(--ui-gap) * 2));
         overflow-x:hidden;
@@ -3779,7 +3404,7 @@
       }
 
       .shell:not(.paneExpanded) .outlookChartsGrid{
-        grid-template-rows:minmax(205px,235px) auto minmax(205px,235px);
+        grid-template-rows:auto auto auto;
         flex:0 0 auto;
       }
 
@@ -3806,7 +3431,6 @@
       .toolPane,
       .toolTitleRow,
       .chartHeader,
-      .tinyChartLabel,
       .chartKey,
       .exportGrid,
       .exportColumn{
@@ -3947,6 +3571,35 @@
       }
     }
 
+    .keyboardInstructions{
+      position:absolute;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      clip-path:inset(50%);
+      white-space:nowrap;
+    }
+    body:has(#drawBtn[aria-pressed="true"]) #map:focus-visible::after,
+    body:has(#drawBtn[aria-pressed="true"]) #map.keyboardDrawing:focus::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:24px;
+      height:24px;
+      transform:translate(-50%,-50%);
+      z-index:800;
+      pointer-events:none;
+      background:linear-gradient(90deg,transparent 11px,#fff 11px,#fff 13px,transparent 13px),
+        linear-gradient(transparent 11px,#fff 11px,#fff 13px,transparent 13px);
+      filter:drop-shadow(0 0 2px #000);
+    }
+    #retryStartupBtn[hidden]{display:none}
+    html[data-road-risk-startup-failed="true"] .rightStack{display:none}
+    html[data-road-risk-startup-failed="true"] .mapControl{
+      max-height:calc(100dvh - 28px);
+      overflow:auto;
+    }
     #profileChart{touch-action:pan-y}
     .roadControls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:8px}
     .roadControls label{display:flex;align-items:center;gap:9px;min-height:44px;font-size:12px;cursor:pointer}
@@ -3954,7 +3607,7 @@
     .roadControls label::after{content:"";width:24px;border-top:2px dashed #f59e0b}
     .roadStatus{margin-top:4px;font-size:11px;line-height:1.4;opacity:.8;overflow-wrap:anywhere}
     .roadStatus:empty{display:none}
-    @media (min-width:1181px){
+    @media (min-width:1181px) and (min-height:521px){
       .shell:not(.paneExpanded) .rightStack{top:calc(var(--ui-gap) + var(--actual-map-control-h, 190px) + 10px)}
     }
 
@@ -4087,15 +3740,42 @@
       .mapActions{grid-template-columns:repeat(2,minmax(0,1fr))}
       #finishDrawBtn{grid-column:1 / -1}
     }
+
+    @media (max-height:520px){
+      /* Leave document space below the interactive map for native scrolling. */
+      #map{
+        height:52vh;
+        height:52svh;
+        min-height:min(210px, calc(100svh - 96px));
+        max-height:300px;
+      }
+    }
+
+    /* Let text move to another row before breaking a datum or control label. */
+    .compactStats,
+    .thresholdCompact{display:flex;flex-wrap:wrap}
+    .compactStats .stat,
+    .shell.paneExpanded .compactStats .stat,
+    .thresholdCompact > button{flex:1 1 min-content;min-width:0;max-width:100%}
+    .compactStats .stat .k,
+    .compactStats .stat .v,
+    .shell.paneExpanded .compactStats .stat .v,
+    .thresholdCompact > button{overflow-wrap:break-word}
+    .thresholdInputRow,
+    .thresholdCompact > .uncertaintyInline,
+    #thresholdValidation{flex:0 0 100%;width:100%}
+    .keyToggle{flex-wrap:wrap}
+    #profileChartKey{grid-template-columns:repeat(auto-fit,minmax(min(100%,7em),1fr))}
   </style>
 </head>
 <body>
-  <div id="map" aria-label="Roads at Risk map"></div>
+  <div id="map" aria-label="Road Risk map" aria-describedby="mapKeyboardInstructions"></div>
+  <p id="mapKeyboardInstructions" class="keyboardInstructions">Use arrow keys to pan the map. While drawing, Enter adds a point at the map center and Escape cancels. On a numbered vertex, Shift plus an arrow key moves that vertex; Enter inspects it.</p>
   <div class="shell" id="shell">
     <header class="titleBar">
       <div class="brandText">
-        <p class="eyebrow">Avalon</p>
-        <h1>Roads at Risk</h1>
+        <p class="eyebrow" id="townName"></p>
+        <h1>Road Risk</h1>
       </div>
     </header>
 
@@ -4112,7 +3792,7 @@
         <button id="clearProfilesBtn" class="drawAction" type="button" aria-label="Clear all profiles">Clear</button>
         <button id="finishDrawBtn" class="drawAction" type="button" disabled title="Add at least two points to finish a line.">Finish Line</button>
       </div>
-      <div class="mapModes" aria-label="Basemap">
+      <div class="mapModes" role="group" aria-label="Basemap">
         <button data-basemap="satellite" class="active" type="button" aria-pressed="true">Aerial</button>
         <button data-basemap="osm" class="secondary" type="button" aria-pressed="false">Streets</button>
       </div>
@@ -4120,6 +3800,8 @@
         <label><input id="snapRoads" type="checkbox" checked aria-describedby="roadStatus">Snap to roads</label>
       </div>
       <div id="roadStatus" class="roadStatus" role="status">Loading road centerlines…</div>
+      <div id="terrainStatus" class="roadStatus" role="alert" hidden></div>
+      <button id="retryStartupBtn" class="secondary" type="button" hidden>Reload Road Risk</button>
       <div class="drawPrompt" id="drawPrompt" role="status" aria-live="polite" hidden>
         <span id="drawPromptText">Tap the map to choose the first point.</span>
         <div class="drawPromptActions">
@@ -4128,20 +3810,20 @@
       </div>
     </section>
 
-    <aside class="rightStack" aria-label="Roads at Risk tools">
-      <nav class="mobileToolNav" aria-label="Roads at Risk sections">
+    <aside class="rightStack" aria-label="Road Risk tools">
+      <nav class="mobileToolNav" aria-label="Road Risk sections">
         <button type="button" data-mobile-target="crossSectionPane" aria-label="Open Road Profile" aria-current="true">Profile</button>
         <button type="button" data-mobile-target="floodHistoryPane" aria-label="Open Flood Outlook">Outlook</button>
         <button type="button" data-mobile-target="exportPane" aria-label="Open Save and Export">Export</button>
       </nav>
 
-      <section class="toolPane crossSectionPane isWorkspaceActive" id="crossSectionPane">
+      <section class="toolPane crossSectionPane isWorkspaceActive" id="crossSectionPane" aria-label="Road Profile" tabindex="-1">
         <div class="toolTitleRow">
           <div class="toolTitle">
             Road Profile
-            <span class="titleDatumToggle" aria-label="Elevation datum">
-              <button data-datum="navd88" class="active" type="button">NAVD88</button>
-              <button data-datum="mllw" class="secondary" type="button">MLLW</button>
+            <span class="titleDatumToggle" role="group" aria-label="Elevation datum">
+              <button data-datum="navd88" class="active" type="button" aria-pressed="true">NAVD88</button>
+              <button data-datum="mllw" class="secondary" type="button" aria-pressed="false">MLLW</button>
             </span>
           </div>
           <div class="paneActions">
@@ -4157,7 +3839,7 @@
               <div class="v" id="minElev">-</div>
             </div>
             <div class="stat">
-              <div class="k">Flooded</div>
+              <div class="k">Below stage</div>
               <div class="v" id="exposedPct">-</div>
             </div>
             <div class="stat">
@@ -4165,6 +3847,7 @@
               <div class="v" id="profileLen">-</div>
             </div>
           </section>
+          <p id="profileCoverage" class="calcNote" role="status"></p>
 
           <section class="pointStrip" aria-label="Selected point">
             <div class="pointHero">
@@ -4177,19 +3860,21 @@
             <div class="metricRows">
               <div class="metricRow"><div class="k">Clearance</div><div class="v" id="pointClearance">-</div></div>
               <div class="metricRow"><div class="k">Archive</div><div class="v" id="pointExceedances">-</div></div>
-              <div class="metricRow"><div class="k">Return</div><div class="v" id="pointReturn">-</div></div>
+              <div class="metricRow"><div class="k">Avg. spacing</div><div class="v" id="pointReturn">-</div></div>
             </div>
           </section>
         </div>
 
-        <div class="thresholdCompact" aria-label="Water threshold">
-          <button class="minor" data-threshold-level="minor" type="button">Minor</button>
-          <button class="moderate" data-threshold-level="moderate" type="button">Moderate</button>
-          <button class="major" data-threshold-level="major" type="button">Major</button>
+        <div class="thresholdCompact" role="group" aria-label="Water threshold">
+          <button class="minor" data-threshold-level="minor" type="button" disabled>Minor</button>
+          <button class="moderate" data-threshold-level="moderate" type="button" disabled>Moderate</button>
+          <button class="major" data-threshold-level="major" type="button" disabled>Major</button>
           <div class="thresholdInputRow">
-            <input id="thresholdNumber" type="number" min="-2" max="14" value="3.42" step="0.05" aria-label="Custom stage in feet NAVD88" />
+            <label for="thresholdNumber" class="stageFieldLabel">Water stage (ft <span id="thresholdFieldDatum">NAVD88</span>)</label>
+            <input id="thresholdNumber" type="number" min="-2" max="14" step="any" aria-label="Custom stage in feet NAVD88" aria-describedby="thresholdValidation" />
             <button id="applyThresholdBtn" class="secondary" type="button">Apply</button>
           </div>
+          <p id="thresholdValidation" role="alert" hidden></p>
           <div class="uncertaintyInline">
             <span>+/-</span>
             <input id="uncertaintyNumber" type="number" min="0" max="3" value="0.50" step="0.05" aria-label="Vertical uncertainty in feet" />
@@ -4200,11 +3885,25 @@
           <div class="chartHeader">
             <h2 class="chartTitle">Elevation</h2>
             <div class="chartPills">
-              <span class="pill" id="thresholdPill">3.42 ft</span>
+              <span class="pill" id="thresholdPill">-</span>
             </div>
           </div>
           <div class="chartKey" id="profileChartKey" aria-label="Cross section key"></div>
-          <div class="chartWrap"><canvas id="profileChart"></canvas></div>
+          <div class="chartWrap"><canvas id="profileChart" role="img" aria-label="Road profile elevation graph" aria-describedby="profileDataHint"></canvas></div>
+          <details class="chartData" id="profileChartData">
+            <summary>Inspect profile data</summary>
+            <p class="calcNote" id="profileDataHint">Browse samples with the controls below. Selecting an active-profile sample updates its location and flood outlook. Export CSV for the complete profile.</p>
+            <div class="chartDataControls">
+              <label>Profile <select id="profileDataSeries" aria-label="Profile to inspect" disabled></select></label>
+              <label>Sample <input id="profileDataSample" type="number" min="1" max="1" step="1" value="1" aria-describedby="profileDataStatus" disabled></label>
+              <button id="profileDataPrevious" class="secondary" type="button" disabled>Previous sample</button>
+              <button id="profileDataNext" class="secondary" type="button" disabled>Next sample</button>
+            </div>
+            <p class="calcNote" id="profileDataStatus" role="status" aria-atomic="true">No profile samples available.</p>
+            <div class="chartDataScroll" tabindex="0" role="region" aria-label="Profile sample data">
+              <table id="profileDataTable"><caption>Profile sample</caption><thead><tr><th scope="col">Distance (ft)</th><th scope="col" id="profileDataElevationHeader">Elevation (ft NAVD88)</th><th scope="col">Latitude</th><th scope="col">Longitude</th></tr></thead><tbody></tbody></table>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -4223,16 +3922,22 @@
               <div class="outlookChartHeader">
                 <div>
                   <h2 id="observedOutlookTitle">Observed History</h2>
-                  <p>Measured Flood Days by Year</p>
+                  <p>Recorded Flood Days by Year</p>
+                  <p class="calcNote">Gaps: no observations. Gold bars: partial years.</p>
                 </div>
                 <div class="chartKey outlookChartKey" id="observedFloodKey" aria-label="Observed history key"></div>
               </div>
-              <div class="tinyChartWrap outlookChartWrap observedChartWrap"><canvas id="observedAnnualChart"></canvas></div>
+              <div class="tinyChartWrap outlookChartWrap observedChartWrap"><canvas id="observedAnnualChart" role="img" aria-label="Observed annual flood days graph" aria-describedby="observedDataContext"></canvas></div>
+              <details class="chartData" id="observedChartData">
+                <summary>Inspect observed data</summary>
+                <p class="calcNote" id="observedDataContext" role="status">Select a profile point to view observed data.</p>
+                <div class="chartDataScroll" tabindex="0" role="region" aria-label="Observed flood-day data"><table id="observedDataTable"><caption>Observed annual flood days</caption><thead><tr><th scope="col">Year</th><th scope="col">Flood days</th><th scope="col">Days observed</th><th scope="col">Coverage</th></tr></thead><tbody></tbody></table></div>
+              </details>
             </section>
-            <div class="scenarioRow" aria-label="Projection scenario">
-              <button data-scenario="low" class="secondary" type="button">Low</button>
-              <button data-scenario="intermediate" class="active" type="button">Intermediate</button>
-              <button data-scenario="high" class="secondary" type="button">High</button>
+            <div class="scenarioRow" role="group" aria-label="Projection scenario">
+              <button data-scenario="low" class="secondary" type="button" aria-pressed="false">Low</button>
+              <button data-scenario="intermediate" class="active" type="button" aria-pressed="true">Intermediate</button>
+              <button data-scenario="high" class="secondary" type="button" aria-pressed="false">High</button>
             </div>
             <section class="outlookChartCard projectedOutlookCard" id="projectedOutlookCard" aria-labelledby="projectedOutlookTitle">
               <div class="outlookChartHeader">
@@ -4242,10 +3947,15 @@
                 </div>
                 <div class="chartKey outlookChartKey" id="projectedFloodKey" aria-label="Projected outlook key"></div>
               </div>
-              <div class="tinyChartWrap outlookChartWrap projectedChartWrap"><canvas id="projectedAnnualChart"></canvas></div>
+              <div class="tinyChartWrap outlookChartWrap projectedChartWrap"><canvas id="projectedAnnualChart" role="img" aria-label="Projected annual flood days graph" aria-describedby="projectedDataContext"></canvas></div>
+              <details class="chartData" id="projectedChartData">
+                <summary>Inspect projected data</summary>
+                <p class="calcNote" id="projectedDataContext" role="status">Select a profile point to view projected data.</p>
+                <div class="chartDataScroll" tabindex="0" role="region" aria-label="Projected flood-day data"><table id="projectedDataTable"><caption>Projected annual flood days</caption><thead><tr><th scope="col">Year</th><th scope="col">Central projection</th><th scope="col">90% range: low</th><th scope="col">90% range: high</th></tr></thead><tbody></tbody></table></div>
+              </details>
             </section>
           </div>
-          <p class="modelNote" id="projectionNote"></p>
+          <p class="calcNote" id="projectionNote"></p>
         </aside>
       </section>
 
@@ -4295,7 +4005,7 @@
   </div>
 
   <div id="roadRiskHelp" class="rrHelpBackdrop" hidden aria-hidden="true">
-    <section class="rrHelpCard" role="dialog" aria-modal="true" aria-labelledby="roadRiskHelpTitle">
+    <section class="rrHelpCard" role="dialog" aria-modal="true" aria-labelledby="roadRiskHelpTitle" tabindex="-1">
       <header class="rrHelpHead">
         <h2 id="roadRiskHelpTitle">About this pane</h2>
         <button id="roadRiskHelpClose" class="rrDialogClose secondary" type="button" aria-label="Close explanation">×</button>
@@ -4309,7 +4019,7 @@
 
   <div id="roadRiskTour" class="rrTour" hidden aria-hidden="true">
     <div id="roadRiskTourSpotlight" class="rrTourSpotlight" aria-hidden="true"></div>
-    <section id="roadRiskTourCard" class="rrTourCard" role="dialog" aria-modal="true" aria-labelledby="roadRiskTourTitle">
+    <section id="roadRiskTourCard" class="rrTourCard" role="dialog" aria-modal="true" aria-labelledby="roadRiskTourTitle" tabindex="-1">
       <header class="rrTourHead">
         <span id="roadRiskTourProgress" class="rrTourProgress">1 of 12</span>
         <button id="roadRiskTourClose" class="rrDialogClose secondary" type="button" aria-label="Close tutorial">×</button>
@@ -4323,17 +4033,51 @@
     </section>
   </div>
 
+  <script>
+    // This runs independently of the application module so a failed library or
+    // module import cannot leave a silent, permanently loading interface.
+    (() => {
+      const fail = () => {
+        document.documentElement.dataset.roadRiskStartupFailed = "true";
+        const status = document.getElementById("terrainStatus");
+        status.hidden = false;
+        status.textContent = "Road Risk could not start because a required component did not load. Reload to retry.";
+        document.getElementById("roadStatus").textContent = "";
+        document.querySelectorAll("#shell button, #shell input, #shell select").forEach(control => { control.disabled = true; });
+        const retry = document.getElementById("retryStartupBtn");
+        retry.disabled = false;
+        retry.hidden = false;
+      };
+      document.getElementById("retryStartupBtn").addEventListener("click", () => window.location.reload());
+      window.addEventListener("error", event => {
+        if((event.target instanceof HTMLScriptElement && event.target.type === "module")
+          || (event.target === window && document.documentElement.dataset.roadRiskInitialized !== "true")) fail();
+      }, true);
+      const mapStyleProbe = document.createElement("div");
+      mapStyleProbe.className = "leaflet-pane";
+      mapStyleProbe.hidden = true;
+      document.body.appendChild(mapStyleProbe);
+      const mapStylesLoaded = getComputedStyle(mapStyleProbe).position === "absolute";
+      mapStyleProbe.remove();
+      if(!window.L || !window.Chart || !mapStylesLoaded) fail();
+    })();
+  </script>
   <script type="module">
     import * as GeoTIFF from "https://cdn.jsdelivr.net/npm/geotiff@2.1.3/+esm";
     import { buildRoadNetwork } from "./road-centerlines.mjs?v=topology-2";
     import { municipalRoads } from "./municipal-roads.mjs?v=boundary-index-2";
+    import { selectDefaultRoadProfile } from "./default-road.mjs?v=town-anchors-1";
+    import { configuredMllwOffset, analyzeProfile } from "./profile-math.mjs?v=calculation-fixes-1";
+    import { encodeDbfText } from "./shapefile-text.mjs?v=utf8-1";
+    import { town } from "./town-config.mjs";
 
     const FT_PER_M = 3.280839895;
-    const DEM_URL = "avalon_dem_5ft_cog.tif";
+    const {dem:DEM_URL, boundary:BOUNDARY_URL, roads:ROAD_CENTERLINES_URL} = town.files;
     const METADATA_URL = "dem_metadata.json";
-    const BOUNDARY_URL = "avalon_boundary.geojson";
     const FLOOD_STATS_URL = "flood_stats.json";
-    const SAVED_LINES_KEY = "avalon-roads-at-risk-saved-lines-v1";
+    const SAVED_LINES_KEY = town.storageKey;
+    document.title = `Road Risk - ${town.name}`;
+    document.getElementById("townName").textContent = town.name;
 
     const state = {
       metadata:null,
@@ -4345,7 +4089,9 @@
       boundsMerc:null,
       drawMode:false,
       pendingPoints:[],
+      roadLoading:true,
       roadNetwork:null,
+      defaultRoadProfile:null,
       roadLayer:null,
       snapPreview:null,
       drawingRoadSnapped:false,
@@ -4354,10 +4100,14 @@
       activeVertexDistances:[],
       markers:[],
       line:null,
+      vertexDrag:null,
       riskLine:null,
       savedLineLayers:null,
       activeSavedLineId:null,
+      activeSavedSourceId:null,
       comparisonSections:[],
+      startupDefaultSuppressed:false,
+      pendingDefaultReset:false,
       activeVertexLabels:[],
       activeSectionColor:"#22d3ee",
       nextEndpointNumber:1,
@@ -4372,7 +4122,7 @@
       hillshadeOverlay:null,
       savedLines:[],
       selectedIndex:null,
-      thresholdFt:3.42,
+      thresholdFt:null,
       uncertaintyFt:.5,
       datum:"navd88",
       profileXZoom:null,
@@ -4459,15 +4209,24 @@
       else map.removeLayer(state.roadLayer);
     }
 
+    async function readAppJson(url){
+      const response = await fetch(url);
+      if(!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
+      return response.json();
+    }
+
+    function townBoundary(){
+      return townBoundary.request ??= readAppJson(BOUNDARY_URL);
+    }
+
     async function loadRoadCenterlines(){
       try{
-        const [source,boundary] = await Promise.all(["avalon_road_centerlines.geojson",BOUNDARY_URL].map(async url => {
-          const response = await fetch(url);
-          if(!response.ok) throw new Error(`Road boundary/data HTTP ${response.status}`);
-          return response.json();
-        }));
+        const [source,boundary] = await Promise.all([readAppJson(ROAD_CENTERLINES_URL), townBoundary()]);
         const {roads:data,contains} = municipalRoads(source,boundary);
         state.roadNetwork = buildRoadNetwork(data,{contains});
+        state.defaultRoadProfile = selectDefaultRoadProfile(data,{
+          contains, network:state.roadNetwork, defaultRoad:town.defaultRoad
+        });
         map.createPane("roadCenterlines");
         map.getPane("roadCenterlines").style.zIndex = 410;
         map.getPane("roadCenterlines").style.pointerEvents = "none";
@@ -4480,7 +4239,14 @@
           : "Freehand mode. Draw or drag points without road snapping.");
       }catch(error){
         console.warn("Road centerlines unavailable", error);
-        setText("roadStatus", "Centerlines unavailable. Reload to retry, or uncheck Snap to roads for freehand.");
+        $("snapRoads").checked = false;
+        setText("roadStatus", "Road centerlines unavailable. Freehand mode is available; reload to retry roads.");
+      }finally{
+        state.roadLoading = false;
+        if(state.pendingDefaultReset){
+          state.pendingDefaultReset = false;
+          defaultSection();
+        }
       }
     }
 
@@ -4515,6 +4281,7 @@
       }
       updateRoadOverlay();
       clearSnapPreview();
+      if(state.pendingDefaultReset) return;
       setText("roadStatus", notice || (toggle.checked
         ? (state.roadNetwork ? "" : "Centerlines unavailable or loading. Uncheck for freehand.")
         : "Freehand mode. Draw or drag points without road snapping."));
@@ -4544,7 +4311,6 @@
       $("shell").style.setProperty("--actual-map-control-h", `${entries[0].target.getBoundingClientRect().height}px`);
     }).observe(document.querySelector(".mapControl"));
     function setText(id, text){ const el = $(id); if(el) el.textContent = text; }
-    function fmtFt(v, digits=1){ return Number.isFinite(v) ? `${v.toFixed(digits)} ft` : "-"; }
     function fmtLen(v){ return Number.isFinite(v) ? v >= 5280 ? `${(v/5280).toFixed(2)} mi` : `${Math.round(v)} ft` : "-"; }
     function fmtSigned(v, digits=1){ return Number.isFinite(v) ? `${v >= 0 ? "+" : ""}${v.toFixed(digits)} ft` : "-"; }
     function fmtCount(v){ return Number.isFinite(v) ? Math.round(v).toLocaleString() : "-"; }
@@ -4555,15 +4321,13 @@
     function activeDatum(){ return state.datum === "mllw" ? "mllw" : "navd88"; }
     function datumLabel(){ return activeDatum().toUpperCase(); }
     function datumOffsetFt(){
-      return activeDatum() === "mllw"
-        ? Number(state.floodStats?.datum?.mllwOffsetFromNavd88Ft ?? .45)
-        : 0;
+      return activeDatum() === "mllw" ? configuredMllwOffset(state.floodStats) : 0;
     }
     function toDisplayDatum(value){
       return Number.isFinite(value) ? value + datumOffsetFt() : value;
     }
     function fromDisplayDatum(value){
-      const n = Number(value);
+      const n = typeof value === "number" ? value : typeof value === "string" && value.trim() ? Number(value) : NaN;
       return Number.isFinite(n) ? n - datumOffsetFt() : n;
     }
     function fmtDatumFt(navd88Ft, digits=2){
@@ -4571,18 +4335,7 @@
       return Number.isFinite(value) ? `${value.toFixed(digits)} ft ${datumLabel()}` : "-";
     }
     function activeDatumThresholds(){
-      const thresholds = state.floodStats?.thresholds?.[activeDatum()];
-      if(thresholds) return thresholds;
-      const fallback = state.floodStats?.thresholds?.navd88 || { minor:3.42, moderate:4.42, major:5.22 };
-      if(activeDatum() === "mllw"){
-        const offset = datumOffsetFt();
-        return {
-          minor:fallback.minor + offset,
-          moderate:fallback.moderate + offset,
-          major:fallback.major + offset
-        };
-      }
-      return fallback;
+      return state.floodStats?.thresholds?.[activeDatum()] || {};
     }
     function chartFontSizes(paneId){
       const expanded = Boolean($("shell")?.classList.contains("paneExpanded") && $(paneId)?.classList.contains("isExpanded"));
@@ -4623,6 +4376,9 @@
     function renderChartKey(chart, containerId){
       const container = $(containerId);
       if(!container) return;
+      const focused = document.activeElement;
+      const focusedIndex = container.contains(focused) ? focused.dataset.legendIndex : undefined;
+      let focusTarget = null;
       container.textContent = "";
       if(!chart?.data?.datasets?.length) return;
       chart.data.datasets.forEach((dataset, index) => {
@@ -4634,7 +4390,9 @@
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+        checkbox.dataset.legendIndex = String(index);
         checkbox.checked = visible;
+        if(checkbox.dataset.legendIndex === focusedIndex) focusTarget = checkbox;
         checkbox.addEventListener("change", event => {
           setDatasetGroupVisibility(chart, index, event.currentTarget.checked);
           renderChartKey(chart, containerId);
@@ -4649,6 +4407,10 @@
         label.append(checkbox, swatch, text);
         container.appendChild(label);
       });
+      if(focusTarget && !container.closest("[hidden], [inert]") && focusTarget.getClientRects().length
+        && (document.activeElement === document.body || document.activeElement === focused)){
+        focusTarget.focus({preventScroll:true});
+      }
     }
     function chartVisibility(chart){
       const visibility = new Map();
@@ -4679,10 +4441,21 @@
       const shell = $("shell");
       const pane = $(paneId);
       if(!shell || !pane) return;
+      cancelVertexDrag();
+      cancelDrawingNavigation();
       const shouldExpand = !pane.classList.contains("isExpanded");
+      const generation = (togglePaneExpansion.generation || 0) + 1;
+      togglePaneExpansion.generation = generation;
+      if(shouldExpand && !shell.classList.contains("paneExpanded") && togglePaneExpansion.restoreContext?.paneId !== paneId){
+        togglePaneExpansion.restoreContext = {
+          paneId, x:window.scrollX, y:window.scrollY, mobile:!desktopWorkspaceTabs(), focus:document.activeElement
+        };
+      }
+      const previousFocus = document.activeElement;
       document.querySelectorAll(".toolPane").forEach(item => item.classList.remove("isExpanded"));
       shell.classList.toggle("paneExpanded", shouldExpand);
       if(shouldExpand) pane.classList.add("isExpanded");
+      syncRoadRiskModalBackground();
       document.documentElement.classList.toggle("mobilePaneOpen", shouldExpand);
       document.body.classList.toggle("mobilePaneOpen", shouldExpand);
       document.querySelectorAll("[data-expand-pane]").forEach(button => {
@@ -4694,6 +4467,34 @@
         button.setAttribute("aria-label", label);
         button.title = label;
       });
+      if(shouldExpand && !activeRoadRiskDialog() && !pane.contains(document.activeElement)){
+        pane.querySelector("[data-expand-pane]")?.focus({preventScroll:true});
+      }
+      if(!shouldExpand){
+        const context = togglePaneExpansion.restoreContext;
+        setMobileToolActive(paneId);
+        window.requestAnimationFrame(() => {
+          if(togglePaneExpansion.generation !== generation || shell.classList.contains("paneExpanded")) return;
+          togglePaneExpansion.restoreContext = null;
+          if(activeRoadRiskDialog()) return;
+          const current = document.activeElement;
+          if(current && current !== document.body && current !== previousFocus && !pane.contains(current)) return;
+          if(!desktopWorkspaceTabs()){
+            const top = context?.mobile ? context.y : window.scrollY + pane.getBoundingClientRect().top - 88;
+            window.scrollTo({left:context?.x || 0, top:Math.max(0, top), behavior:"auto"});
+          }
+          const target = pane.contains(current) ? current
+            : previousFocus?.isConnected && pane.contains(previousFocus) ? previousFocus
+            : current === document.body && context?.focus?.isConnected ? context.focus : null;
+          if(target && !target.closest("[hidden], [inert]")){
+            target.focus({preventScroll:true});
+            const rect = target.getBoundingClientRect();
+            if(!desktopWorkspaceTabs() && (rect.top < 0 || rect.bottom > window.innerHeight)){
+              target.scrollIntoView({block:"nearest", behavior:"auto"});
+            }
+          }
+        });
+      }
       renderChart(state.profile);
       if(state.selectedIndex !== null && state.selectedIndex !== undefined) updateInspection(false);
       else renderPointFloodProduct(null);
@@ -4704,7 +4505,8 @@
     }
 
     function desktopWorkspaceTabs(){
-      return window.matchMedia("(min-width: 1181px)").matches;
+      // A short wide window needs the same scrollable flow as a narrow one.
+      return window.matchMedia("(min-width: 1181px) and (min-height: 521px)").matches;
     }
 
     function setMobileToolActive(paneId){
@@ -4728,17 +4530,34 @@
       if(!buttons.length || !panes.length) return;
 
       let navigationLockUntil = 0;
+      let navigationTimer = 0;
+      let navigationGeneration = 0;
+      const cancelNavigationLock = () => {
+        navigationGeneration += 1;
+        navigationLockUntil = 0;
+        window.clearTimeout(navigationTimer);
+        navigationTimer = 0;
+      };
 
       buttons.forEach(button => {
         button.addEventListener("click", () => {
           const pane = $(button.dataset.mobileTarget);
           if(!pane) return;
-          navigationLockUntil = performance.now() + 1000;
+          cancelDrawingNavigation();
+          cancelNavigationLock();
           setMobileToolActive(pane.id);
           if(desktopWorkspaceTabs()){
             pane.scrollTop = 0;
             return;
           }
+          navigationLockUntil = performance.now() + 1000;
+          const generation = navigationGeneration;
+          navigationTimer = window.setTimeout(() => {
+            if(generation !== navigationGeneration) return;
+            navigationTimer = 0;
+            navigationLockUntil = 0;
+            scheduleSync();
+          }, 1000);
           const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
           pane.scrollIntoView({ behavior, block:"start" });
         });
@@ -4747,7 +4566,8 @@
       let navigationFrame = 0;
       const syncActiveSection = () => {
         navigationFrame = 0;
-        if(!window.matchMedia("(max-width: 1180px)").matches) return;
+        if(desktopWorkspaceTabs()) return;
+        if($("shell")?.classList.contains("paneExpanded") || activeRoadRiskDialog()) return;
         if(performance.now() < navigationLockUntil) return;
         const atPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 24;
         let activePane = atPageEnd ? panes[panes.length - 1] : panes[0];
@@ -4763,8 +4583,36 @@
         if(navigationFrame) return;
         navigationFrame = window.requestAnimationFrame(syncActiveSection);
       };
+      const noteNavigationIntent = event => {
+        if(!event.isTrusted) return;
+        cancelDrawingNavigation();
+        if(event.type === "keydown"){
+          if(!["PageUp", "PageDown", "Home", "End", "ArrowUp", "ArrowDown", " "].includes(event.key)) return;
+          if(event.target?.closest?.('input, select, textarea, [contenteditable="true"]')) return;
+        }
+        cancelNavigationLock();
+        scheduleSync();
+      };
       window.addEventListener("scroll", scheduleSync, { passive:true });
-      window.addEventListener("resize", scheduleSync, { passive:true });
+      window.addEventListener("resize", () => {
+        cancelDrawingNavigation();
+        cancelNavigationLock();
+        scheduleSync();
+      }, { passive:true });
+      for(const type of ["wheel", "touchstart", "pointerdown"]){
+        window.addEventListener(type, noteNavigationIntent, { passive:true, capture:true });
+      }
+      document.addEventListener("keydown", noteNavigationIntent, true);
+      // Read the final state after native modal/expansion handlers have run.
+      document.addEventListener("click", scheduleSync, true);
+      document.addEventListener("keydown", scheduleSync, true);
+      document.addEventListener("focusin", event => {
+        if(event.isTrusted && event.target !== document.body) cancelDrawingNavigation();
+        scheduleSync();
+      });
+      document.addEventListener("input", event => {
+        if(event.isTrusted) cancelDrawingNavigation();
+      }, true);
       syncActiveSection();
     }
 
@@ -4772,7 +4620,7 @@
       map:{
         title:"Map",
         tourStep:1,
-        body:`<p>The large buttons at the top of this box control your line: <strong>Draw</strong> starts it, <strong>Finish Line</strong> completes it after at least two points, and <strong>Clear</strong> removes the current profiles.</p><p>Use the map's +/− controls, scroll or pinch to zoom. <strong>Aerial</strong> or <strong>Streets</strong> provide finer detail. Enlargement does not improve the source resolution.</p><p><strong>Snap to roads</strong> shows dashed orange NJOGIS centerlines and works when drawing or dragging numbered points. Solid colored lines are profiles; the red outline is the town boundary. Changing backgrounds never changes the source terrain data or profile calculations.</p>`
+        body:`<p>The large buttons at the top of this box control your line: <strong>Draw</strong> starts it, <strong>Finish Line</strong> completes it after at least two points, and <strong>Clear</strong> removes the current profiles.</p><p>Use the map's +/− controls, scroll or pinch to zoom. <strong>Aerial</strong> or <strong>Streets</strong> provide finer detail. Enlargement does not improve the source resolution.</p><p><strong>Keyboard:</strong> focus the map and use arrow keys to pan. While drawing, Enter adds a point at the map center; Escape cancels. Focus a numbered vertex and use Shift plus an arrow key to move it, or Enter to inspect it.</p><p><strong>Snap to roads</strong> shows dashed orange NJOGIS centerlines and works when drawing or moving numbered points. Solid colored lines are profiles; the red outline is the town boundary. Changing backgrounds never changes the source terrain data or profile calculations.</p>`
       },
       profile:{
         title:"Road Profile",
@@ -4793,7 +4641,7 @@
 
     const ROADRISK_TOUR_STEPS = [
       {
-        title:"Welcome to Roads at Risk",
+        title:"Welcome to Road Risk",
         target:".titleBar",
         body:`<p>Think of this as a quick road-elevation stress test. Draw a route, choose a water level, and the app shows where that route is low enough to be exposed.</p><p><strong>It is a planning tool, not a road-closure order or a real-time emergency forecast.</strong> Use it to find weak points, compare routes, and frame better field questions.</p>`
       },
@@ -4810,7 +4658,7 @@
       {
         title:"Read the three headline numbers",
         target:".compactStats",
-        body:`<p><strong>Low point</strong> is the weakest sampled elevation along the line. <strong>Flooded</strong> is the percentage of the route at or below the chosen water level. <strong>Length</strong> is the measured distance between the endpoints.</p><p>Start here: a short route with one low point can tell a very different story from a long route with most of its length exposed.</p>`
+        body:`<p><strong>Low point</strong> is the weakest sampled elevation along the line. <strong>Below stage</strong> is the percentage of the route at or below the chosen water level. <strong>Length</strong> follows the full traced route, including its bends. Unknown terrain spans are identified separately.</p><p>Start here: a short route with one low point can tell a very different story from a long route with most of its length exposed.</p>`
       },
       {
         title:"Keep the datum straight",
@@ -4820,7 +4668,7 @@
       {
         title:"Set the water level",
         target:".thresholdCompact",
-        body:`<p>The colored presets load this town's <strong>Minor, Moderate, and Major</strong> flood stages. For a specific scenario, type an exact level and press Apply.</p><p>That level drives the entire profile: pink segments are at or below it, the Flooded percentage is recalculated, and the dashed chart line moves with it. This is the fastest way to test how a few inches can change route exposure.</p>`
+        body:`<p>The colored presets load this town's <strong>Minor, Moderate, and Major</strong> flood stages. For a specific scenario, type an exact level and press Apply.</p><p>That level drives the entire profile: pink segments are at or below it, the Below stage percentage is recalculated, and the dashed chart line moves with it. This is the fastest way to test how a few inches can change route exposure.</p>`
       },
       {
         title:"Use the elevation chart",
@@ -4850,7 +4698,7 @@
       {
         title:"Export something useful",
         target:".exportColumn:nth-child(2)",
-        body:`<p><strong>PNG image</strong> is the quickest shareable snapshot. CSV includes sampled coordinates and elevation values. SHP creates a line layer and an elevation-point layer, both in WGS84 latitude/longitude; CSV + SHP packages both formats.</p><p>Before exporting, confirm the datum, threshold, route, and selected scenario—the export preserves the choices currently driving the screen.</p>`
+        body:`<p><strong>PNG image</strong> captures the current view, including any visible scenario charts. CSV includes sampled coordinates, elevations, water stages and clearances. SHP creates a line layer and an elevation-point layer; CSV + SHP packages both formats.</p><p>CSV and SHP coordinates use WGS84 latitude/longitude. Their elevations and water stages always use feet NAVD88, even when the screen displays MLLW. Projection charts are not included in these data files. Check the routes and water stages before exporting.</p>`
       }
     ];
 
@@ -4859,13 +4707,63 @@
     let roadRiskTourIndex = 0;
     let roadRiskTourReturnFocus = null;
     let roadRiskTourPositionHandler = null;
+    let roadRiskModalInertState = null;
+    let roadRiskTourGeneration = 0;
+    const roadRiskTourTimers = new Set();
+
+    function activeRoadRiskDialog(){
+      for(const id of ["roadRiskTour", "roadRiskHelp"]){
+        const modal = $(id);
+        if(modal && !modal.hidden) return modal.querySelector('[role="dialog"]');
+      }
+      return null;
+    }
+
+    function roadRiskDialogTabStops(dialog){
+      return [...dialog.querySelectorAll('a[href], button, input, select, textarea, [tabindex], [contenteditable="true"]')]
+        .filter(element => {
+          const style = getComputedStyle(element);
+          return !element.disabled && element.tabIndex >= 0 &&
+            !element.closest("[hidden], [inert]") && element.getClientRects().length > 0 &&
+            style.display !== "none" && style.visibility !== "hidden";
+        });
+    }
+
+    function syncRoadRiskModalBackground(){
+      // A single owner preserves the original states while expansion and modal
+      // layers overlap, regardless of the order in which those layers close.
+      const targets = new Set();
+      if(activeRoadRiskDialog()) [$("map"), $("shell")].filter(Boolean).forEach(element => targets.add(element));
+      if(document.querySelector(".toolPane.isExpanded")){
+        [$("map"), ...document.querySelectorAll(".titleBar, .mapControl, .mobileToolNav")]
+          .filter(Boolean).forEach(element => targets.add(element));
+      }
+      const retained = [];
+      for(const saved of roadRiskModalInertState || []){
+        if(targets.has(saved.element)) retained.push(saved);
+        else saved.element.inert = saved.inert;
+      }
+      for(const element of targets){
+        if(!retained.some(saved => saved.element === element)) retained.push({element, inert:element.inert});
+        element.inert = true;
+      }
+      roadRiskModalInertState = retained.length ? retained : null;
+    }
+
+    function restoreRoadRiskDialogFocus(trigger){
+      const target = trigger?.isConnected ? trigger : $("roadRiskTourBtn");
+      const pane = target?.closest?.(".toolPane");
+      if(pane && desktopWorkspaceTabs()) setMobileToolActive(pane.id);
+      target?.focus?.();
+    }
 
     function closeRoadRiskHelp(){
       const modal = $("roadRiskHelp");
       if(!modal || modal.hidden) return;
       modal.hidden = true;
       modal.setAttribute("aria-hidden", "true");
-      roadRiskDialogReturnFocus?.focus?.();
+      syncRoadRiskModalBackground();
+      restoreRoadRiskDialogFocus(roadRiskDialogReturnFocus);
       roadRiskDialogReturnFocus = null;
     }
 
@@ -4873,12 +4771,16 @@
       const item = ROADRISK_PANE_HELP[key];
       const modal = $("roadRiskHelp");
       if(!item || !modal) return;
+      cancelVertexDrag();
+      cancelDrawingNavigation();
+      if(!$("roadRiskTour")?.hidden) setRoadRiskTourOpen(false);
       roadRiskHelpKey = key;
-      roadRiskDialogReturnFocus = trigger || document.activeElement;
+      if(modal.hidden) roadRiskDialogReturnFocus = trigger || document.activeElement;
       setText("roadRiskHelpTitle", item.title);
       $("roadRiskHelpBody").innerHTML = item.body;
       modal.hidden = false;
       modal.setAttribute("aria-hidden", "false");
+      syncRoadRiskModalBackground();
       $("roadRiskHelpClose")?.focus();
     }
 
@@ -4951,54 +4853,128 @@
       card.style.setProperty("bottom", "auto", "important");
     }
 
+    function cancelRoadRiskTourWork(){
+      roadRiskTourGeneration += 1;
+      roadRiskTourTimers.forEach(timer => window.clearTimeout(timer));
+      roadRiskTourTimers.clear();
+    }
+
+    function scheduleRoadRiskTourWork(callback, delay){
+      const generation = roadRiskTourGeneration;
+      const timer = window.setTimeout(() => {
+        roadRiskTourTimers.delete(timer);
+        if(generation !== roadRiskTourGeneration || $("roadRiskTour")?.hidden !== false) return;
+        callback();
+      }, delay);
+      roadRiskTourTimers.add(timer);
+    }
+
+    function noteRoadRiskTourReadingIntent(event){
+      const card = $("roadRiskTourCard");
+      if($("roadRiskTour")?.hidden !== false || !card?.contains(event.target)) return;
+      if(event.type === "wheel" && !event.deltaY) return;
+      if(event.type === "pointerdown" && event.target !== card) return;
+      if(event.type === "keydown" && !["PageUp", "PageDown", "Home", "End", "ArrowUp", "ArrowDown"].includes(event.key)) return;
+      // Scroll events also come from layout and focus. Only newer user input
+      // suppresses this generation's remaining focus-reveal work.
+      revealRoadRiskTourFocus.readingGeneration = roadRiskTourGeneration;
+    }
+
+    function revealRoadRiskTourFocus(){
+      if($("roadRiskTour")?.hidden !== false) return;
+      if(revealRoadRiskTourFocus.readingGeneration === roadRiskTourGeneration) return;
+      const card = $("roadRiskTourCard");
+      const focused = document.activeElement;
+      if(!card?.contains(focused) || focused === card) return;
+      const box = card.getBoundingClientRect();
+      const rect = focused.getBoundingClientRect();
+      const top = Math.max(0, box.top + card.clientTop) + 4;
+      const bottom = Math.min(window.innerHeight, box.top + card.clientTop + card.clientHeight) - 4;
+      if(bottom <= top) return;
+      if(rect.top < top) card.scrollTop -= top - rect.top;
+      else if(rect.bottom > bottom) card.scrollTop += rect.bottom - bottom;
+    }
+
+    function resyncRoadRiskTourTarget(scroll=true){
+      if($("roadRiskTour")?.hidden !== false) return;
+      const step = ROADRISK_TOUR_STEPS[roadRiskTourIndex];
+      if(!step) return;
+      const pane = document.querySelector(step.target)?.closest(".toolPane");
+      if(pane) setMobileToolActive(pane.id);
+      const target = visibleRoadRiskTourTarget(step.target);
+      if(scroll) target?.scrollIntoView({block:"center", inline:"nearest", behavior:"auto"});
+      positionRoadRiskTour();
+      revealRoadRiskTourFocus();
+    }
+
+    function scheduleRoadRiskTourLayout({delay=0, repeatTargetScroll=false}={}){
+      scheduleRoadRiskTourWork(() => {
+        resyncRoadRiskTourTarget();
+        scheduleRoadRiskTourWork(() => resyncRoadRiskTourTarget(repeatTargetScroll), 80);
+        scheduleRoadRiskTourWork(() => {
+          positionRoadRiskTour();
+          revealRoadRiskTourFocus();
+        }, 260);
+      }, delay);
+    }
+
     function renderRoadRiskTourStep(){
       const step = ROADRISK_TOUR_STEPS[roadRiskTourIndex];
       if(!step) return;
-      if(desktopWorkspaceTabs()){
-        const pane = document.querySelector(step.target)?.closest(".toolPane");
-        if(pane) setMobileToolActive(pane.id);
-      }
+      cancelRoadRiskTourWork();
       setText("roadRiskTourProgress", `${roadRiskTourIndex + 1} of ${ROADRISK_TOUR_STEPS.length}`);
       setText("roadRiskTourTitle", step.title);
       $("roadRiskTourBody").innerHTML = step.body;
-      $("roadRiskTourBack").disabled = roadRiskTourIndex === 0;
+      const back = $("roadRiskTourBack");
+      const backWasFocused = document.activeElement === back;
+      back.disabled = roadRiskTourIndex === 0;
       setText("roadRiskTourNext", roadRiskTourIndex === ROADRISK_TOUR_STEPS.length - 1 ? "Finish" : "Next");
+      if(back.disabled && backWasFocused){
+        $("roadRiskTourNext")?.focus();
+      }
 
-      window.setTimeout(() => {
-        const target = visibleRoadRiskTourTarget(step.target);
-        target?.scrollIntoView({ block:"center", inline:"nearest", behavior:"auto" });
-        window.setTimeout(positionRoadRiskTour, 80);
-        window.setTimeout(positionRoadRiskTour, 260);
-      }, 30);
+      scheduleRoadRiskTourLayout({delay:30});
     }
 
     function setRoadRiskTourOpen(open, startIndex=0){
       const tutorial = $("roadRiskTour");
       if(!tutorial) return;
       if(open){
+        cancelVertexDrag();
+        cancelDrawingNavigation();
         closeRoadRiskHelp();
         const expandedPane = document.querySelector(".toolPane.isExpanded");
         if(expandedPane) togglePaneExpansion(expandedPane.id);
-        roadRiskTourReturnFocus = document.activeElement;
+        if(tutorial.hidden) roadRiskTourReturnFocus = document.activeElement;
         roadRiskTourIndex = clamp(Math.round(startIndex), 0, ROADRISK_TOUR_STEPS.length - 1);
         tutorial.hidden = false;
         tutorial.setAttribute("aria-hidden", "false");
         document.body.classList.add("rrTourActive");
-        roadRiskTourPositionHandler = () => positionRoadRiskTour();
-        window.addEventListener("resize", roadRiskTourPositionHandler);
-        document.addEventListener("scroll", roadRiskTourPositionHandler, true);
+        syncRoadRiskModalBackground();
+        if(!roadRiskTourPositionHandler){
+          roadRiskTourPositionHandler = event => {
+            if(event?.type === "resize"){
+              cancelRoadRiskTourWork();
+              scheduleRoadRiskTourLayout({repeatTargetScroll:true});
+            }else positionRoadRiskTour();
+          };
+          window.addEventListener("resize", roadRiskTourPositionHandler);
+          document.addEventListener("scroll", roadRiskTourPositionHandler, true);
+        }
         renderRoadRiskTourStep();
         $("roadRiskTourNext")?.focus();
       }else{
+        cancelRoadRiskTourWork();
         tutorial.hidden = true;
         tutorial.setAttribute("aria-hidden", "true");
         document.body.classList.remove("rrTourActive");
+        syncRoadRiskModalBackground();
         if(roadRiskTourPositionHandler){
           window.removeEventListener("resize", roadRiskTourPositionHandler);
           document.removeEventListener("scroll", roadRiskTourPositionHandler, true);
           roadRiskTourPositionHandler = null;
         }
-        roadRiskTourReturnFocus?.focus?.();
+        restoreRoadRiskDialogFocus(roadRiskTourReturnFocus);
         roadRiskTourReturnFocus = null;
       }
     }
@@ -5031,21 +5007,45 @@
           renderRoadRiskTourStep();
         }
       });
+      for(const type of ["wheel", "touchmove", "pointerdown"]){
+        $("roadRiskTourCard")?.addEventListener(type, noteRoadRiskTourReadingIntent, {passive:true});
+      }
       document.addEventListener("keydown", event => {
-        const helpOpen = !$("roadRiskHelp")?.hidden;
-        const tourOpen = !$("roadRiskTour")?.hidden;
-        if(!helpOpen && !tourOpen) return;
+        const dialog = activeRoadRiskDialog();
+        if(!dialog) return;
+        noteRoadRiskTourReadingIntent(event);
+        // Capture before Leaflet's focused-map handlers and application shortcuts.
+        // Native button/link activation and dialog scrolling still use defaults.
+        event.stopImmediatePropagation();
         if(event.key === "Escape"){
           event.preventDefault();
-          event.stopImmediatePropagation();
-          if(helpOpen) closeRoadRiskHelp();
-          if(tourOpen) setRoadRiskTourOpen(false);
+          if(!$("roadRiskTour")?.hidden) setRoadRiskTourOpen(false);
+          else closeRoadRiskHelp();
           return;
         }
-        if(!tourOpen) return;
-        if(event.key === "ArrowRight") $("roadRiskTourNext")?.click();
-        if(event.key === "ArrowLeft") $("roadRiskTourBack")?.click();
-      });
+        if(event.key === "Tab"){
+          event.preventDefault();
+          const stops = roadRiskDialogTabStops(dialog);
+          const index = stops.indexOf(document.activeElement);
+          const next = index < 0 ? (event.shiftKey ? stops.length - 1 : 0)
+            : (index + (event.shiftKey ? -1 : 1) + stops.length) % stops.length;
+          (stops[next] || dialog).focus();
+          return;
+        }
+        if(!dialog.contains(document.activeElement)){
+          event.preventDefault();
+          (roadRiskDialogTabStops(dialog)[0] || dialog).focus();
+          return;
+        }
+        if(!$("roadRiskTour")?.hidden && ["ArrowRight", "ArrowLeft"].includes(event.key)){
+          event.preventDefault();
+          $(event.key === "ArrowRight" ? "roadRiskTourNext" : "roadRiskTourBack")?.click();
+        }
+      }, true);
+      document.addEventListener("focusin", event => {
+        const dialog = activeRoadRiskDialog();
+        if(dialog && !dialog.contains(event.target)) (roadRiskDialogTabStops(dialog)[0] || dialog).focus();
+      }, true);
     }
 
     function niceScaleFeet(maxFeet){
@@ -5095,12 +5095,8 @@
 
     installDualScale();
 
-    function archiveEndYear(){
-      return Number(String(state.floodStats?.archive?.endDate || "").slice(0, 4)) || new Date().getFullYear();
-    }
-
     function projectionBaseYear(){
-      return Math.max(new Date().getFullYear(), archiveEndYear());
+      return 2026; // The regional scenario baseline is 2026.
     }
 
     function scenarioDeltaFt(year){
@@ -5114,11 +5110,8 @@
       return Number.isFinite(trend) ? trend : 0;
     }
 
-    function decimalYear(dateText){
-      const parts = dateParts(dateText);
-      const idx = doyIndex(dateText);
-      if(!parts || idx === null) return null;
-      return parts.year + idx / 365.2425;
+    function decimalYear(parts){
+      return parts ? parts.year + parts.dayIndex / 365.2425 : null;
     }
 
     function lowerBound(sortedValues, value){
@@ -5154,6 +5147,7 @@
       state.projectionScenario = next;
       document.querySelectorAll("[data-scenario]").forEach(button => {
         const active = button.dataset.scenario === next;
+        button.setAttribute("aria-pressed", String(active));
         button.classList.toggle("active", active);
         button.classList.toggle("secondary", !active);
       });
@@ -5163,7 +5157,7 @@
     }
 
     function classifyStage(stageFt){
-      const thresholds = state.floodStats?.thresholds?.navd88 || { minor:3.42, moderate:4.42, major:5.22 };
+      const thresholds = state.floodStats.thresholds.navd88;
       if(stageFt >= thresholds.major) return { label:"Major+", color:"var(--major)" };
       if(stageFt >= thresholds.moderate) return { label:"Moderate", color:"var(--moderate)" };
       if(stageFt >= thresholds.minor) return { label:"Minor", color:"var(--minor)" };
@@ -5171,85 +5165,78 @@
     }
 
     function countDailyExceedances(stageFt){
-      return empiricalExceedance(stageFt).observedExceedances;
+      return empiricalExceedance(stageFt, rawPeakDistribution()).observedExceedances;
     }
 
-    function recurrenceText(stageFt){
-      const years = state.floodStats?.archive?.years || 0;
-      const count = countDailyExceedances(stageFt);
-      if(!years || !state.floodStats?.dailyPeakNavd88Ft?.length) return "-";
-      if(count <= 0) return `>${years.toFixed(1)} yr`;
-      const perYear = count / years;
-      if(perYear >= 1) return `~${(365.2425 / perYear).toFixed(1)} days`;
-      return `~${(years / count).toFixed(1)} yr`;
-    }
-
-    function topEventText(stageFt){
-      const topEvents = state.floodStats?.topEvents || [];
-      if(!topEvents.length) return "Observed archive loading.";
-      const record = topEvents[0];
-      if(stageFt > record.heightNavd88Ft){
-        return `Above observed record by ${(stageFt - record.heightNavd88Ft).toFixed(1)} ft. Record: ${record.displayDate}, ${record.heightNavd88Ft.toFixed(2)} ft NAVD88.`;
-      }
-      const nearest = topEvents.reduce((best, item) => Math.abs(item.heightNavd88Ft - stageFt) < Math.abs(best.heightNavd88Ft - stageFt) ? item : best, topEvents[0]);
-      return `Nearest top event: #${nearest.rank}, ${nearest.displayDate}, ${nearest.heightNavd88Ft.toFixed(2)} ft NAVD88.`;
+    function recurrenceText(stageFt, count=countDailyExceedances(stageFt)){
+      const days = dailyArchive().length;
+      if(!days) return "-";
+      if(count <= 0) return "Not observed";
+      const spacing = days / count;
+      return spacing < 365.2425 ? `~${spacing.toFixed(1)} days` : `~${(spacing / 365.2425).toFixed(1)} yr`;
     }
 
     const MONTH_STARTS = [0,31,59,90,120,151,181,212,243,273,304,334];
 
+    function isLeapYear(year){
+      return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    }
+
     function dateParts(dateText){
       const match = String(dateText || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
       if(!match) return null;
-      return { year:Number(match[1]), month:Number(match[2]), day:Number(match[3]) };
-    }
-
-    function doyIndex(dateText){
-      const parts = dateParts(dateText);
-      if(!parts) return null;
-      if(parts.month === 2 && parts.day === 29) return 58;
-      const start = MONTH_STARTS[parts.month - 1];
-      if(start === undefined) return null;
-      const idx = start + parts.day - 1;
-      return idx >= 0 && idx < 365 ? idx : null;
+      const year = Number(match[1]), month = Number(match[2]), day = Number(match[3]);
+      if(year < 1 || month < 1 || month > 12) return null;
+      const leapYear = isLeapYear(year);
+      const monthDays = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      if(day < 1 || day > monthDays[month - 1]) return null;
+      return { year, dayIndex:MONTH_STARTS[month - 1] + day - 1 + (leapYear && month > 2 ? 1 : 0) };
     }
 
     function snapStageBucket(stageFt){
       if(!Number.isFinite(stageFt)) return null;
-      return Number((Math.round(stageFt * 10) / 10).toFixed(1));
+      return Math.round(stageFt * 10) / 10;
     }
 
-    function dailyArchive(){
-      const rows = state.floodStats?.dailyPeakArchive;
-      if(!Array.isArray(rows)) return [];
-      return rows
-        .map(row => ({
-          date:String(row.date || "").slice(0, 10),
-          peakFt:Number(row.peakNavd88Ft)
-        }))
-        .filter(row => /^\d{4}-\d{2}-\d{2}$/.test(row.date) && Number.isFinite(row.peakFt));
-    }
-
-    function presentRebasedArchive(){
+    function archiveData(){
+      const source = state.floodStats;
       const baseYear = projectionBaseYear();
       const trend = datumTrendFtPerYear();
-      return dailyArchive()
-        .map(row => {
-          const eventYear = decimalYear(row.date);
-          const rebaseFt = eventYear === null ? 0 : (baseYear - eventYear) * trend;
-          return {
-            ...row,
-            presentPeakFt:row.peakFt + rebaseFt,
-            rebaseFt
-          };
-        })
-        .filter(row => Number.isFinite(row.presentPeakFt));
+      const cached = state.archiveData;
+      if(cached?.source === source && cached.baseYear === baseYear && cached.trend === trend) return cached;
+      const compact = Array.isArray(source?.dailyPeakCompact);
+      const input = compact ? source.dailyPeakCompact : source?.dailyPeakArchive;
+      const days = new Map();
+      for(const row of Array.isArray(input) ? input : []){
+        const date = String((compact ? row?.[0] : row?.date) ?? "").slice(0, 10);
+        const height = compact ? row?.[1] : row?.peakNavd88Ft;
+        const value = typeof height === "string" && height.trim() ? Number(height) : height;
+        if(!Number.isFinite(value)) continue;
+        const parts = dateParts(date);
+        if(!parts) continue;
+        const peakFt = compact ? value / 100 : value;
+        // A duplicate calendar day still has only one daily maximum.
+        if(days.has(date) && days.get(date).peakFt >= peakFt) continue;
+        const presentPeakFt = peakFt + (baseYear - decimalYear(parts)) * trend;
+        days.set(date, {date, year:parts.year, peakFt, presentPeakFt});
+      }
+      const records = [...days.values()];
+      const coverage = new Map();
+      for(const {year} of records){
+        coverage.set(year, (coverage.get(year) || 0) + 1);
+      }
+      const years = archiveYearRange(coverage);
+      state.floodBucketCache?.clear();
+      state.archiveData = {source, baseYear, trend, records, coverage, years,
+        rawSorted:records.map(row => row.peakFt).sort((a,b) => a-b),
+        presentSorted:records.map(row => row.presentPeakFt).filter(Number.isFinite).sort((a,b) => a-b)};
+      return state.archiveData;
     }
 
-    function presentPeakDistribution(){
-      return presentRebasedArchive()
-        .map(row => row.presentPeakFt)
-        .sort((a, b) => a - b);
-    }
+    function dailyArchive(){ return archiveData().records; }
+    function rawPeakDistribution(){ return archiveData().rawSorted; }
+
+    function presentPeakDistribution(){ return archiveData().presentSorted; }
 
     function empiricalExceedance(stageFt, sortedValues=presentPeakDistribution(), smooth=false){
       const n = sortedValues.length;
@@ -5281,10 +5268,8 @@
       };
     }
 
-    function archiveYearRange(records){
-      const years = records
-        .map(row => dateParts(row.date)?.year)
-        .filter(Number.isFinite);
+    function archiveYearRange(coverage){
+      const years = [...coverage.keys()];
       if(!years.length) return [];
       const min = Math.min(...years);
       const max = Math.max(...years);
@@ -5296,13 +5281,28 @@
       const p = clamp(Number(probability) || 0, 0, 1);
       if(n <= 0 || p <= 0) return { mean:0, low:0, high:0 };
       if(p >= 1) return { mean:n, low:n, high:n };
-      const mean = n * p;
-      const sd = Math.sqrt(n * p * (1 - p));
-      return {
-        mean,
-        low:Math.max(0, mean - 1.6448536269514722 * sd),
-        high:Math.min(n, mean + 1.6448536269514722 * sd)
-      };
+
+      // Seed relative probabilities at the mode to avoid underflow when
+      // almost all of the probability lies far from either endpoint.
+      const masses = new Float64Array(n + 1);
+      const mode = Math.floor((n + 1) * p);
+      const failure = 1 - p;
+      masses[mode] = 1;
+      for(let k=mode; k>0; k--){
+        masses[k - 1] = masses[k] * k / (n - k + 1) * (failure / p);
+      }
+      for(let k=mode; k<n; k++){
+        masses[k + 1] = masses[k] * (n - k) / (k + 1) * (p / failure);
+      }
+      const total = masses.reduce((sum, mass) => sum + mass, 0);
+      let cumulative = 0;
+      let low = null;
+      for(let k=0; k<=n; k++){
+        cumulative += masses[k];
+        if(low === null && cumulative >= 0.05 * total) low = k;
+        if(cumulative >= 0.95 * total) return { mean:n * p, low, high:k };
+      }
+      return { mean:n * p, low, high:n };
     }
 
     function projectionForThreshold(thresholdFt, year){
@@ -5335,31 +5335,28 @@
     function buildBucketStats(thresholdFt){
       const threshold = snapStageBucket(thresholdFt);
       if(threshold === null) return null;
+      const {records, years, presentSorted, baseYear, coverage} = archiveData();
       const key = `${threshold.toFixed(1)}|${state.projectionScenario}`;
       if(state.floodBucketCache.has(key)) return state.floodBucketCache.get(key);
-
-      const records = dailyArchive();
-      const years = archiveYearRange(records);
       if(!records.length || !years.length) return null;
-      const presentPeaks = presentPeakDistribution();
-      const presentDistribution = empiricalExceedance(threshold, presentPeaks, false);
-      const baseYear = projectionBaseYear();
+      const presentDistribution = empiricalExceedance(threshold, presentSorted);
 
       const annualMap = new Map(years.map(year => [year, 0]));
 
-      for(const row of records){
-        const parts = dateParts(row.date);
-        if(!parts) continue;
-        if(row.peakFt >= threshold){
-          annualMap.set(parts.year, (annualMap.get(parts.year) || 0) + 1);
+      for(const {year, peakFt} of records){
+        if(peakFt >= threshold){
+          annualMap.set(year, annualMap.get(year) + 1);
         }
       }
 
       const firstYear = years[0];
       const lastYear = years[years.length - 1];
-      const projection2100 = projectionForThreshold(threshold, 2100);
-
-      const annualRows = years.map(year => ({ year, count:annualMap.get(year) || 0 }));
+      const annualRows = years.map(year => {
+        const coverageDays = coverage.get(year) || 0;
+        const calendarDays = isLeapYear(year) ? 366 : 365;
+        return {year, count:coverageDays ? annualMap.get(year) : null,
+          coverageDays, calendarDays, complete:coverageDays === calendarDays};
+      });
       const futureYears = Array.from({length:2100 - baseYear}, (_, i) => baseYear + i + 1);
       const future = futureYears.map(year => projectionForThreshold(threshold, year)).filter(Boolean);
       const scenario = activeScenario();
@@ -5375,18 +5372,26 @@
         lastYear,
         baseYear,
         annualRows,
-        projection2100,
+        projection2100:future.at(-1) ?? null,
         presentDistribution,
         future,
-        total:presentDistribution.exceedances
+        total:annualRows.reduce((sum, row) => sum + (row.count || 0), 0)
       };
       state.floodBucketCache.set(key, stats);
       return stats;
     }
 
     function setReady(ok, text){
+      if(document.documentElement.dataset.roadRiskStartupFailed === "true") return;
       document.documentElement.dataset.demStatus = ok ? "ready" : "unavailable";
       document.documentElement.dataset.demStatusText = text || "";
+      const status = $("terrainStatus");
+      if(status){
+        status.hidden = ok;
+        status.textContent = ok ? "" : text || "Road Risk data unavailable. Reload to retry.";
+      }
+      const retry = $("retryStartupBtn");
+      if(retry) retry.hidden = ok;
     }
 
     function mercatorFromLatLng(lat, lon){
@@ -5404,7 +5409,7 @@
       const dphi = (b.lat - a.lat) * Math.PI / 180;
       const dl = (b.lng - a.lng) * Math.PI / 180;
       const s = Math.sin(dphi/2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl/2) ** 2;
-      return 2 * r * Math.asin(Math.sqrt(s)) * FT_PER_M;
+      return 2 * r * Math.asin(Math.sqrt(Math.min(1, s))) * FT_PER_M;
     }
 
     function sampleDem(lat, lon){
@@ -5427,6 +5432,48 @@
       };
     }
 
+    function profileGridCrossings(a, b){
+      const cuts = [0, 1];
+      if(!state.raster || !state.metadata) return cuts;
+      const [west,,,north] = state.boundsMerc;
+      const pixel = state.metadata.pixelSizeMeters;
+      const east = west + state.width * pixel;
+      const south = north - state.height * pixel;
+      const start = mercatorFromLatLng(a.lat, a.lng);
+      const end = mercatorFromLatLng(b.lat, b.lng);
+      const minX = Math.min(start.x, end.x), maxX = Math.max(start.x, end.x);
+      const minY = Math.min(start.y, end.y), maxY = Math.max(start.y, end.y);
+      if(maxX < west || minX > east || maxY < south || minY > north) return cuts;
+
+      // Longitude is linear along the route. Convert each crossed raster
+      // row back to latitude to compute its station on that same route.
+      const firstCol = Math.max(0, Math.ceil((minX - west) / pixel));
+      const lastCol = Math.min(state.width, Math.floor((maxX - west) / pixel));
+      if(start.x !== end.x){
+        for(let col=firstCol; col<=lastCol; col++){
+          const t = (west + col * pixel - start.x) / (end.x - start.x);
+          if(t <= 0 || t >= 1) continue;
+          const {lat,lng} = interpolatePoint(a, b, t);
+          const {y} = mercatorFromLatLng(lat, lng);
+          if(y >= south && y <= north) cuts.push(t);
+        }
+      }
+
+      const firstRow = Math.max(0, Math.ceil((north - maxY) / pixel));
+      const lastRow = Math.min(state.height, Math.floor((north - minY) / pixel));
+      if(a.lat !== b.lat){
+        for(let row=firstRow; row<=lastRow; row++){
+          const y = north - row * pixel;
+          const lat = Math.atan(Math.sinh(y / 6378137)) * 180 / Math.PI;
+          const t = (lat - a.lat) / (b.lat - a.lat);
+          if(t <= 0 || t >= 1) continue;
+          const x = start.x + (end.x - start.x) * t;
+          if(x >= west && x <= east) cuts.push(t);
+        }
+      }
+      return cuts.sort((left, right) => left - right);
+    }
+
     function polylineVertexDistances(points){
       const distances = [0];
       for(let i=1; i<points.length; i++){
@@ -5438,81 +5485,48 @@
     function buildProfilePath(points){
       if(!Array.isArray(points) || points.length < 2) return [];
       const vertexDistances = polylineVertexDistances(points);
-      const totalLengthFt = vertexDistances[vertexDistances.length - 1];
-      const stepFt = Math.max(5, totalLengthFt / 2400);
       const rows = [];
-      let lastValidDistance = null;
-      for(let segmentIndex=0; segmentIndex<points.length - 1; segmentIndex++){
-        const a = points[segmentIndex];
-        const b = points[segmentIndex + 1];
-        const segmentLengthFt = haversineFeet(a, b);
-        const samples = Math.max(1, Math.ceil(segmentLengthFt / stepFt));
-        for(let i=segmentIndex ? 1 : 0; i<=samples; i++){
-          const t = i / samples;
-          const p = interpolatePoint(a, b, t);
-          const elev = sampleDem(p.lat, p.lng);
-          const distance = vertexDistances[segmentIndex] + segmentLengthFt * t;
-          if(Number.isFinite(elev)){
-            lastValidDistance = distance;
-            rows.push({ distanceFt:distance, elevationFt:elev, lat:p.lat, lng:p.lng });
-          }else if(lastValidDistance !== null){
-            rows.push({ distanceFt:distance, elevationFt:null, lat:p.lat, lng:p.lng });
+      function sample(point, distanceFt){
+        const {lat,lng} = point;
+        rows.push({ distanceFt, elevationFt:sampleDem(lat, lng), lat, lng });
+      }
+      sample(points[0], 0);
+      for(let i=1; i<points.length; i++){
+        const a = points[i - 1];
+        const b = points[i];
+        const from = vertexDistances[i - 1];
+        const lengthFt = vertexDistances[i] - from;
+        if(lengthFt > 0){
+          const cuts = profileGridCrossings(a, b);
+          for(let j=1; j<cuts.length; j++){
+            // A corner can touch two grid boundaries at the same station.
+            if(cuts[j] - cuts[j - 1] <= 1e-12) continue;
+            const t = (cuts[j - 1] + cuts[j]) / 2;
+            sample(interpolatePoint(a, b, t), from + lengthFt * t);
           }
         }
+        sample(b, vertexDistances[i]);
       }
       return rows;
     }
 
-    function buildProfile(a, b){
-      return buildProfilePath([a, b]);
-    }
-
     function updateStats(profile){
-      const valid = profile.filter(p => Number.isFinite(p.elevationFt));
-      if(!valid.length){
-        setText("minElev", "-");
-        setText("exposedPct", "-");
-        setText("profileLen", "-");
-        setText("riskLen", "-");
-        setText("riskSummary", "No DEM samples");
-        return;
-      }
-      const min = valid.reduce((a,b) => b.elevationFt < a.elevationFt ? b : a, valid[0]);
-      const len = valid[valid.length - 1].distanceFt - valid[0].distanceFt;
-      let riskLen = 0;
-      let longestRun = 0;
-      let currentRun = 0;
-      for(let i=1; i<valid.length; i++){
-        const segment = valid[i].distanceFt - valid[i-1].distanceFt;
-        if(valid[i].elevationFt <= state.thresholdFt || valid[i-1].elevationFt <= state.thresholdFt){
-          riskLen += segment;
-          currentRun += segment;
-          longestRun = Math.max(longestRun, currentRun);
-        }else{
-          currentRun = 0;
-        }
-      }
-
-      setText("minElev", fmtDatumFt(min.elevationFt, 1));
-      setText("exposedPct", `${Math.round((riskLen / Math.max(len, 1)) * 100)}%`);
-      setText("profileLen", fmtLen(len));
-      setText("riskLen", fmtLen(riskLen));
-      setText("riskSummary", riskLen > 0 ? fmtLen(longestRun) : "None");
+      const result = profile.length ? analyzeProfile(profile, state.thresholdFt) : null;
+      const hasCoverage = result?.coveredLengthFt > 0;
+      const hasUnknown = result?.unknownLengthFt > .01;
+      setText("minElev", fmtDatumFt(result?.minElevationFt, 1));
+      setText("profileLen", profile.length > 1 ? fmtLen(result.totalLengthFt) : "-");
+      setText("exposedPct", hasCoverage
+        ? `${Math.round(result.exposedLengthFt / result.coveredLengthFt * 100)}%${hasUnknown ? "*" : ""}`
+        : "-");
+      setText("profileCoverage", hasUnknown
+        ? `${hasCoverage ? "* Of covered length. " : ""}${fmtLen(result.unknownLengthFt)} has no elevation data.` : "");
     }
 
     function riskSegments(profile){
-      const segments = [];
-      let active = [];
-      for(const p of profile){
-        if(Number.isFinite(p.elevationFt) && p.elevationFt <= state.thresholdFt){
-          active.push([p.lat, p.lng]);
-        }else if(active.length){
-          if(active.length > 1) segments.push(active);
-          active = [];
-        }
-      }
-      if(active.length > 1) segments.push(active);
-      return segments;
+      if(!profile.length) return [];
+      return analyzeProfile(profile, state.thresholdFt).exposedSegments
+        .map(segment => segment.map(point => [point.lat, point.lng]));
     }
 
     function renderRiskSegments(profile){
@@ -5532,18 +5546,20 @@
     }
 
     function profileDisplayRange(profile){
-      const profiles = [
-        ...state.comparisonSections.map(section => section.profile || []),
-        profile || []
-      ];
-      const values = profiles.flat()
-        .map(p => toDisplayDatum(p.elevationFt))
-        .filter(Number.isFinite);
+      let min = Infinity;
+      let max = -Infinity;
+      const include = value => {
+        if(!Number.isFinite(value)) return;
+        if(value < min) min = value;
+        if(value > max) max = value;
+      };
+      for(const section of state.comparisonSections){
+        for(const point of section.profile || []) include(toDisplayDatum(point.elevationFt));
+      }
+      for(const point of profile || []) include(toDisplayDatum(point.elevationFt));
       const threshold = toDisplayDatum(state.thresholdFt);
-      if(Number.isFinite(threshold)) values.push(threshold);
-      if(!values.length) return { min:0, max:6 };
-      let min = Math.min(...values);
-      let max = Math.max(...values);
+      include(threshold);
+      if(min === Infinity) return { min:0, max:6 };
       if(Math.abs(max - min) < .5){
         min -= .25;
         max += .25;
@@ -5556,11 +5572,16 @@
     }
 
     function profileDisplayXMax(profile=state.profile){
-      const profiles = [
-        ...state.comparisonSections.map(section => section.profile || []),
-        profile || []
-      ];
-      return Math.max(1, ...profiles.flat().map(point => Number(point.distanceFt) || 0));
+      let max = 1;
+      const include = point => {
+        const distance = Number(point.distanceFt);
+        if(Number.isFinite(distance) && distance > max) max = distance;
+      };
+      for(const section of state.comparisonSections){
+        for(const point of section.profile || []) include(point);
+      }
+      for(const point of profile || []) include(point);
+      return max;
     }
 
     function applyProfileZoom(chart){
@@ -5579,8 +5600,11 @@
       if(!state.chart || state.profile.length < 2 || !Number.isFinite(center) || !Number.isFinite(factor)) return;
       const fullMin = 0;
       const fullMax = profileDisplayXMax();
-      const currentMin = Number.isFinite(startRange?.min) ? startRange.min : fullMin;
-      const currentMax = Number.isFinite(startRange?.max) ? startRange.max : fullMax;
+      const xScale = state.chart.scales.x;
+      const currentMin = Number.isFinite(startRange?.min) ? startRange.min
+        : Number.isFinite(xScale?.min) ? xScale.min : fullMin;
+      const currentMax = Number.isFinite(startRange?.max) ? startRange.max
+        : Number.isFinite(xScale?.max) ? xScale.max : fullMax;
       const currentSpan = Math.max(1, currentMax - currentMin);
       const nextSpan = clamp(currentSpan * factor, Math.min(Math.max(5, fullMax * .005), fullMax), fullMax);
       const centerRatio = clamp((center - currentMin) / currentSpan, 0, 1);
@@ -5619,12 +5643,13 @@
         event.preventDefault();
         const rect = canvas.getBoundingClientRect();
         const centerPixel = ((event.touches[0].clientX + event.touches[1].clientX) / 2) - rect.left;
-        const center = state.chart.scales.x?.getValueForPixel(centerPixel);
-        if(!Number.isFinite(center)) return;
+        const xScale = state.chart.scales.x;
+        const center = xScale?.getValueForPixel(centerPixel);
+        if(!Number.isFinite(center) || !Number.isFinite(xScale.min) || !Number.isFinite(xScale.max)) return;
         pinch = {
           distance:Math.max(1, touchDistance(event.touches)),
           center,
-          range:state.profileXZoom ? { ...state.profileXZoom } : null
+          range:{ min:xScale.min, max:xScale.max }
         };
       }, { passive:false });
 
@@ -5643,7 +5668,7 @@
     }
 
     function handleProfileWheel(event){
-      if(!state.chart || !state.profile.length) return;
+      if(!state.chart || !state.profile.length || !Number.isFinite(event.deltaY) || event.deltaY === 0) return;
       event.preventDefault();
       if(event.ctrlKey || event.metaKey){
         const xScale = state.chart.scales.x;
@@ -5676,9 +5701,6 @@
         nextMax = limitMax;
         nextMin = nextMax - nextSpan;
       }
-      nextMin = Math.floor(nextMin);
-      nextMax = Math.ceil(nextMax);
-      if(nextMax <= nextMin) nextMax = nextMin + 1;
       state.profileYZoom = { min:nextMin, max:nextMax };
       applyProfileZoom(state.chart);
       state.chart.update("none");
@@ -5697,18 +5719,23 @@
           ctx.textAlign="center";
           ctx.textBaseline="middle";
           for(const vertex of dataset.vertexMarkers){
+            if(!Number.isFinite(vertex.distanceFt)) continue;
             let bestIndex = -1;
             let bestDistance = Infinity;
             dataPoints.forEach((point, index) => {
-              if(!Number.isFinite(point?.y) || metaPoints[index]?.skip) return;
+              if(!Number.isFinite(point?.x)) return;
               const delta = Math.abs(point.x - vertex.distanceFt);
               if(delta < bestDistance){
                 bestDistance = delta;
                 bestIndex = index;
               }
             });
-            if(bestIndex < 0) continue;
+            // Control vertices are sampled explicitly. Missing terrain at that
+            // position must not move its number onto a different location.
+            if(bestIndex < 0 || bestDistance > 1e-6 || !Number.isFinite(dataPoints[bestIndex].y)
+              || !metaPoints[bestIndex] || metaPoints[bestIndex].skip) continue;
             const { x, y } = metaPoints[bestIndex];
+            if(!Number.isFinite(x) || !Number.isFinite(y)) continue;
             if(x < chartArea.left - 2 || x > chartArea.right + 2 || y < chartArea.top - 2 || y > chartArea.bottom + 2) continue;
             ctx.beginPath();
             ctx.arc(x, y, 10, 0, Math.PI * 2);
@@ -5727,6 +5754,235 @@
 
     function profileNumberLabel(labels){
       return labels?.length ? labels.join("–") : "Profile";
+    }
+
+    function nearestChartProfileIndex(event){
+      const chart = state.chart;
+      if(!chart || !Number.isFinite(event.x) || !Number.isFinite(event.y)) return null;
+      const area = chart.chartArea;
+      if(area && (event.x < area.left || event.x > area.right || event.y < area.top || event.y > area.bottom)) return null;
+      let bestIndex = null;
+      let bestDistance = Infinity;
+      chart.data.datasets.forEach((dataset, datasetIndex) => {
+        if(!dataset.profileSelectable || !chart.isDatasetVisible(datasetIndex)) return;
+        chart.getDatasetMeta(datasetIndex).data.forEach((point, index) => {
+          if(!point || point.skip || !Number.isFinite(dataset.data[index]?.y)) return;
+          const position = point.getCenterPoint ? point.getCenterPoint(true) : point;
+          if(!Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+          const visible = chart.isPointInArea ? chart.isPointInArea(position)
+            : !area || (position.x >= area.left && position.x <= area.right && position.y >= area.top && position.y <= area.bottom);
+          if(!visible && !point.inRange?.(event.x, event.y, true)) return;
+          const distance = (position.x - event.x) ** 2 + (position.y - event.y) ** 2;
+          if(distance < bestDistance){ bestDistance = distance; bestIndex = index; }
+        });
+      });
+      return bestIndex;
+    }
+
+    function chartDataValue(value, digits=2){
+      return Number.isFinite(value) ? value.toFixed(digits) : "No data";
+    }
+
+    function profileDataSeries(profile=state.profile){
+      const series = state.comparisonSections.map((section, index) => ({
+        id:`comparison:${index}`, label:`Comparison profile ${profileNumberLabel(section.vertexLabels || [])}`,
+        profile:section.profile || [], active:false
+      }));
+      if(profile.length) series.unshift({id:"active", label:`Active profile ${profileNumberLabel(state.activeVertexLabels)}`, profile, active:true});
+      return series.filter(section => section.profile.length);
+    }
+
+    function profileDataCells(point){
+      return [chartDataValue(point.distanceFt),
+        chartDataValue(Number.isFinite(point.elevationFt) ? toDisplayDatum(point.elevationFt) : null),
+        chartDataValue(point.lat, 6), chartDataValue(point.lng, 6)];
+    }
+
+    function annualChartDataRows(kind, bucketStats){
+      if(!bucketStats) return [];
+      if(kind === "observed") return bucketStats.annualRows.map(row => [String(row.year),
+        Number.isFinite(row.count) ? String(row.count) : "No observations",
+        `${row.coverageDays} / ${row.calendarDays}`,
+        !row.coverageDays ? "No observations" : row.complete ? "Complete" : "Partial year"]);
+      return bucketStats.future.map(row => [String(row.year), chartDataValue(row.mean), chartDataValue(row.low), chartDataValue(row.high)]);
+    }
+
+    function replaceChartDataRows(tableId, rows){
+      const body = $(tableId)?.querySelector("tbody");
+      if(!body) return;
+      const fragment = document.createDocumentFragment();
+      rows.forEach(cells => {
+        const row = document.createElement("tr");
+        cells.forEach((value, index) => {
+          const cell = document.createElement(index === 0 ? "th" : "td");
+          if(index === 0) cell.scope = "row";
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        fragment.appendChild(row);
+      });
+      body.replaceChildren(fragment);
+    }
+
+    function installChartDataAccessibility(){
+      if(installChartDataAccessibility.installed) return;
+      installChartDataAccessibility.installed = true;
+      $("profileDataSeries").addEventListener("change", event => {
+        renderProfileData.view = {id:event.target.value, index:event.target.value === "active" ? state.selectedIndex ?? 0 : 0};
+        delete $("profileDataSample").dataset.sampleDirty;
+        renderProfileData();
+      });
+      $("profileDataSample").addEventListener("input", event => { event.target.dataset.sampleDirty = "true"; });
+      $("profileDataSample").addEventListener("change", () => applyProfileDataSample());
+      $("profileDataSample").addEventListener("keydown", event => {
+        if(event.key !== "Enter") return;
+        event.preventDefault();
+        applyProfileDataSample();
+      });
+      $("profileDataPrevious").addEventListener("click", () => applyProfileDataSample((renderProfileData.view?.index ?? 0) - 1));
+      $("profileDataNext").addEventListener("click", () => applyProfileDataSample((renderProfileData.view?.index ?? 0) + 1));
+      $("profileChartData").addEventListener("toggle", () => renderProfileData());
+      for(const kind of ["observed", "projected"]){
+        $(`${kind}ChartData`).addEventListener("toggle", () => renderAnnualChartData(kind, renderAnnualChartData.models?.[kind] || null));
+      }
+      document.querySelectorAll(".chartDataScroll").forEach(region => {
+        region.addEventListener("focus", revealChartDataFocus);
+        region.addEventListener("keydown", event => {
+          if(event.defaultPrevented || event.target !== region || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey
+            || region.scrollHeight <= region.clientHeight) return;
+          const page = Math.max(1, region.clientHeight - 28);
+          switch(event.key){
+            case "PageUp": region.scrollTop -= page; break;
+            case "PageDown": region.scrollTop += page; break;
+            case "Home": region.scrollTop = 0; break;
+            case "End": region.scrollTop = region.scrollHeight; break;
+            default: return;
+          }
+          // Keep keyboard paging in the focused table at its scroll boundaries.
+          event.preventDefault();
+        });
+      });
+    }
+
+    function revealChartDataFocus(){
+      const focused = document.activeElement;
+      if(activeRoadRiskDialog() || !focused?.matches(".chartDataScroll")) return;
+      focused.scrollIntoView({block:"nearest", inline:"nearest", behavior:"auto"});
+    }
+
+    function renderProfileData(profile=state.profile){
+      if(!$("profileChartData")) return;
+      installChartDataAccessibility();
+      const series = profileDataSeries(profile);
+      const select = $("profileDataSeries"), input = $("profileDataSample");
+      const changed = renderProfileData.profile !== profile;
+      const selectionChanged = renderProfileData.selectedIndex !== state.selectedIndex;
+      let view = renderProfileData.view;
+      if(changed || !view || (!renderProfileData.browsing && selectionChanged && state.selectedIndex !== null)){
+        view = {id:"active", index:state.selectedIndex ?? 0};
+      }
+      const section = series.find(item => item.id === view.id) || series[0];
+      if(section) view = {id:section.id, index:clamp(view.index, 0, section.profile.length - 1)};
+      else view = {id:"", index:0};
+      renderProfileData.view = view;
+      renderProfileData.profile = profile;
+      renderProfileData.selectedIndex = state.selectedIndex;
+      const optionKey = JSON.stringify(series.map(item => [item.id, item.label]));
+      if(select.dataset.options !== optionKey){
+        select.replaceChildren(...series.map(item => {
+          const option = document.createElement("option");
+          option.value = item.id; option.textContent = item.label; return option;
+        }));
+        select.dataset.options = optionKey;
+      }
+      select.value = view.id;
+      select.disabled = !section;
+      input.disabled = !section;
+      input.max = String(section?.profile.length || 1);
+      if(changed || !input.dataset.sampleDirty){
+        input.value = String(view.index + 1);
+        input.removeAttribute("aria-invalid");
+        delete input.dataset.sampleDirty;
+      }
+      const previous = $("profileDataPrevious"), next = $("profileDataNext");
+      const focused = document.activeElement;
+      previous.disabled = !section || view.index === 0;
+      next.disabled = !section || view.index === section.profile.length - 1;
+      if((focused === previous && previous.disabled) || (focused === next && next.disabled)){
+        (input.disabled ? $("profileChartData").querySelector("summary") : input).focus({preventScroll:true});
+      }
+      setText("profileDataElevationHeader", `Elevation (ft ${datumLabel()})`);
+      const point = section?.profile[view.index];
+      if(!point){
+        setText("profileDataStatus", "No profile samples available.");
+        replaceChartDataRows("profileDataTable", []);
+        return;
+      }
+      const missing = !Number.isFinite(point.elevationFt);
+      const context = `${section.label}. Sample ${view.index + 1} of ${section.profile.length}, ${chartDataValue(point.distanceFt)} ft along section. `;
+      const detail = missing ? "No elevation data; no flood outlook for this sample."
+        : `${chartDataValue(toDisplayDatum(point.elevationFt))} ft ${datumLabel()}.`;
+      if(input.getAttribute("aria-invalid") !== "true") setText("profileDataStatus", context + detail + (section.active ? "" : " Comparison data only; the active point is unchanged."));
+      $("profileDataTable").querySelector("caption").textContent = `${section.label}, sample ${view.index + 1}. Values rounded to 2 decimals; coordinates to 6.`;
+      replaceChartDataRows("profileDataTable", $("profileChartData").open ? [profileDataCells(point)] : []);
+    }
+
+    function revealProfileDataSample(point){
+      const chart = state.chart;
+      if(!chart || !point) return;
+      if(state.profileXZoom && (point.distanceFt < chart.scales.x.min || point.distanceFt > chart.scales.x.max)){
+        state.profileXZoom = null;
+        delete chart.options.scales.x.min;
+        delete chart.options.scales.x.max;
+      }
+      const elevation = Number.isFinite(point.elevationFt) ? toDisplayDatum(point.elevationFt) : null;
+      if(state.profileYZoom && Number.isFinite(elevation) && (elevation < chart.scales.y.min || elevation > chart.scales.y.max)){
+        state.profileYZoom = null;
+        const range = profileDisplayRange(state.profile);
+        chart.options.scales.y.min = range.min;
+        chart.options.scales.y.max = range.max;
+      }
+      chart.update("none");
+    }
+
+    function applyProfileDataSample(index=null){
+      const input = $("profileDataSample");
+      const section = profileDataSeries().find(item => item.id === $("profileDataSeries").value);
+      if(!section) return;
+      const next = index === null ? Number(input.value) - 1 : index;
+      if((index === null && !input.value.trim()) || !Number.isInteger(next) || next < 0 || next >= section.profile.length){
+        input.setAttribute("aria-invalid", "true");
+        setText("profileDataStatus", `Enter a whole sample number from 1 to ${section.profile.length}.`);
+        return;
+      }
+      delete input.dataset.sampleDirty;
+      input.removeAttribute("aria-invalid");
+      renderProfileData.view = {id:section.id, index:next};
+      renderProfileData.browsing = true;
+      try{
+        if(section.active){
+          if(Number.isFinite(section.profile[next].elevationFt)) selectProfileIndex(next, true, false);
+          else{ resetInspection(); renderChart(state.profile); }
+          revealProfileDataSample(section.profile[next]);
+        }
+        renderProfileData();
+      }finally{ renderProfileData.browsing = false; }
+    }
+
+    function renderAnnualChartData(kind, bucketStats){
+      if(!$(`${kind}ChartData`)) return;
+      installChartDataAccessibility();
+      renderAnnualChartData.models ||= {};
+      renderAnnualChartData.models[kind] = bucketStats;
+      const name = kind === "observed" ? "Observed annual flood days" : "Projected annual flood days";
+      const context = !bucketStats ? `Select a profile point to view ${kind} data.`
+        : `${name} at ${fmtDatumFt(bucketStats.threshold, 2)}.` + (kind === "projected"
+          ? ` ${bucketStats.scenarioShort} scenario. Central count and conditional 90% range in flood days, rounded to 2 decimals. The range excludes terrain and sea-level uncertainty.`
+          : " No observations is a gap, not zero flood days. Partial years show only their available observations.");
+      setText(`${kind}DataContext`, context);
+      $(kind === "observed" ? "observedAnnualChart" : "projectedAnnualChart").setAttribute("aria-label", context);
+      $(`${kind}DataTable`).querySelector("caption").textContent = bucketStats ? `${name} at ${fmtDatumFt(bucketStats.threshold, 2)}${kind === "projected" ? ` — ${bucketStats.scenarioShort}` : ""}` : name;
+      replaceChartDataRows(`${kind}DataTable`, $(`${kind}ChartData`).open ? annualChartDataRows(kind, bucketStats) : []);
     }
 
     function renderChart(profile){
@@ -5762,14 +6018,15 @@
         fill:section.id === "active",
         pointRadius:0,
         borderWidth:section.id === "active" ? chartFontSizes("crossSectionPane").line + 1 : chartFontSizes("crossSectionPane").line,
-        tension:.22,
+        tension:0,
         spanGaps:false
       }));
       const maxX = profileDisplayXMax(profile);
-      const riskData = profile.map(point => ({
-        x:point.distanceFt,
-        y:Number.isFinite(point.elevationFt) && point.elevationFt <= state.thresholdFt ? toDisplayDatum(point.elevationFt) : null
-      }));
+      const exposed = profile.length ? analyzeProfile(profile, state.thresholdFt).exposedSegments : [];
+      const riskData = exposed.flatMap((segment, index) => [
+        ...(index ? [{x:segment[0].distanceFt, y:null}] : []),
+        ...segment.map(point => ({x:point.distanceFt, y:toDisplayDatum(point.elevationFt)}))
+      ]);
       const thresholdValue = toDisplayDatum(state.thresholdFt);
       const thresholdData = [{ x:0, y:thresholdValue }, { x:maxX, y:thresholdValue }];
       const selectedPoint = profile[state.selectedIndex];
@@ -5792,7 +6049,7 @@
               backgroundColor:"rgba(251,113,133,.18)",
               pointRadius:0,
               borderWidth:fonts.line + 2,
-              tension:.12,
+              tension:0,
               spanGaps:false
             },
             {
@@ -5829,9 +6086,8 @@
           maintainAspectRatio:false,
           interaction:{ mode:"nearest", intersect:false },
           onClick(event){
-            const hits = state.chart.getElementsAtEventForMode(event, "nearest", { intersect:false }, true);
-            const hit = hits.find(item => state.chart.data.datasets[item.datasetIndex]?.profileSelectable);
-            if(hit) selectProfileIndex(hit.index, true, true);
+            const index = nearestChartProfileIndex(event);
+            if(index !== null) selectProfileIndex(index, true, true);
           },
           plugins:{
             legend:{ display:false },
@@ -5885,6 +6141,7 @@
         state.chart = new Chart(ctx, config);
       }
       renderChartKey(state.chart, "profileChartKey");
+      renderProfileData(profile);
       resizeCharts();
     }
 
@@ -5918,7 +6175,8 @@
             label:"Observed",
             data:observed,
             legendColor:"rgba(34,211,238,.82)",
-            backgroundColor:"rgba(34,211,238,.72)",
+            backgroundColor:bucketStats ? bucketStats.annualRows.map(row => row.complete
+              ? "rgba(34,211,238,.72)" : "rgba(251,191,36,.72)") : [],
             borderColor:"rgba(125,211,252,.96)",
             borderWidth:1,
             borderRadius:2
@@ -5937,7 +6195,10 @@
               callbacks:{
                 label(ctx){
                   const value = ctx.parsed?.y;
-                  return Number.isFinite(value) ? `Observed: ${fmtFlood(value,0)} Flood Days` : null;
+                  const row = bucketStats?.annualRows[ctx.dataIndex];
+                  return Number.isFinite(value)
+                    ? [`Recorded: ${fmtFlood(value,0)} flood days`, `${row?.coverageDays || 0} of ${row?.calendarDays || 365} days available`]
+                    : "No observations";
                 }
               }
             }
@@ -5955,6 +6216,7 @@
         state.observedAnnualChart = new Chart(canvas, config);
       }
       renderChartKey(state.observedAnnualChart, "observedFloodKey");
+      renderAnnualChartData("observed", bucketStats);
     }
 
     function renderProjectedFloodChart(bucketStats){
@@ -5984,7 +6246,7 @@
             },
             {
               label:"Uncertainty",
-              keyLabel:"Uncertainty",
+              keyLabel:"90% range",
               legendGroup:"projectedRange",
               data:high,
               legendColor:"rgba(251,191,36,.46)",
@@ -6027,7 +6289,7 @@
                   if(ctx.dataset.label === "Uncertainty"){
                     const lowValue = low[ctx.dataIndex];
                     return Number.isFinite(lowValue)
-                      ? `Uncertainty: ${fmtFlood(lowValue,0)} - ${fmtFlood(value,0)} Flood Days`
+                      ? `90% conditional count range: ${fmtFlood(lowValue,0)} - ${fmtFlood(value,0)} flood days`
                       : null;
                   }
                   return `${bucketStats?.scenarioShort || "Scenario"} Projection: ${fmtFlood(value,1)} Flood Days`;
@@ -6048,6 +6310,7 @@
         state.projectedAnnualChart = new Chart(canvas, config);
       }
       renderChartKey(state.projectedAnnualChart, "projectedFloodKey");
+      renderAnnualChartData("projected", bucketStats);
     }
 
     function renderAnnualFloodCharts(bucketStats){
@@ -6060,19 +6323,15 @@
       const bucketStats = buildBucketStats(stageFt);
       if(!bucketStats){
         setText("floodBucketPill", "No point");
-        setText("floodArchiveTotal", "-");
-        setText("floodOutlook", "-");
-        setText("annualFloodMeta", "Archive");
         setText("projectionNote", "");
         renderAnnualFloodCharts(null);
         return null;
       }
 
-      setText("floodBucketPill", fmtDatumFt(bucketStats.threshold, 1));
-      setText("floodArchiveTotal", fmtFlood(bucketStats.total, 0));
-      setText("floodOutlook", bucketStats.projection2100 ? fmtFlood(bucketStats.projection2100.mean, 1) : "-");
-      setText("annualFloodMeta", `${bucketStats.firstYear}-2100`);
-      setText("projectionNote", "");
+      setText("floodBucketPill", fmtDatumFt(bucketStats.threshold, 2));
+      setText("projectionNote", bucketStats.presentDistribution.observedExceedances === 0
+        ? "No events at this height in the available analog record; zero does not establish zero risk."
+        : "90% count band assumes independent days; excludes terrain and sea-level uncertainty.");
       renderAnnualFloodCharts(bucketStats);
       return bucketStats;
     }
@@ -6089,22 +6348,19 @@
 
     function pointStats(point){
       if(!point || !Number.isFinite(point.elevationFt)) return null;
-      const mllwOffset = state.floodStats?.datum?.mllwOffsetFromNavd88Ft ?? .45;
       const uncertainty = state.uncertaintyFt;
       const stageClass = classifyStage(point.elevationFt);
       const bucketStageFt = snapStageBucket(point.elevationFt);
-      const exceedances = Number.isFinite(bucketStageFt) ? countDailyExceedances(bucketStageFt) : countDailyExceedances(point.elevationFt);
+      const exceedances = countDailyExceedances(bucketStageFt);
       const clearance = point.elevationFt - state.thresholdFt;
       return {
         elevationFt:point.elevationFt,
         bucketStageFt,
-        mllwFt:point.elevationFt + mllwOffset,
         clearance,
         uncertainty,
         stageClass,
         exceedances,
-        recurrence:recurrenceText(bucketStageFt ?? point.elevationFt),
-        analog:topEventText(bucketStageFt ?? point.elevationFt),
+        recurrence:recurrenceText(bucketStageFt, exceedances),
         risk:clearance <= -uncertainty ? "Below threshold"
           : clearance <= uncertainty ? "Within uncertainty"
           : "Above threshold"
@@ -6117,7 +6373,7 @@
         <div class="popupStats">
           <strong>${fmtDatumFt(stats.elevationFt, 2)}</strong>
           <span>${fmtLen(point.distanceFt)} along section</span>
-          <span>Recurrence: ${stats.recurrence}</span>
+          <span>Recorded flood-day spacing: ${stats.recurrence}</span>
           <span>Clearance: ${fmtSigned(stats.clearance, 2)}</span>
           <span class="tiny">${stats.risk}; +/-${stats.uncertainty.toFixed(2)} ft uncertainty</span>
         </div>
@@ -6130,7 +6386,6 @@
         map.removeLayer(state.inspectMarker);
         state.inspectMarker = null;
       }
-      setText("pointDistance", "No point");
       setText("pointElev", "-");
       setText("pointClass", "-");
       setText("pointClearance", "-");
@@ -6146,15 +6401,13 @@
         resetInspection();
         return;
       }
-      const bucketStats = renderPointFloodProduct(stats.bucketStageFt);
-      setText("pointDistance", fmtLen(point.distanceFt));
+      renderPointFloodProduct(stats.bucketStageFt);
       setText("pointElev", fmtDatumFt(stats.elevationFt, 1));
       setText("pointClass", stats.stageClass.label);
       if($("pointClass")) $("pointClass").style.background = stats.stageClass.color;
       setText("pointClearance", fmtSigned(stats.clearance, 2));
       setText("pointReturn", stats.recurrence);
       setText("pointExceedances", `${fmtCount(stats.exceedances)} days`);
-      if(bucketStats?.projection2100) setText("floodOutlook", fmtFlood(bucketStats.projection2100.mean, 1));
 
       const latLng = L.latLng(point.lat, point.lng);
       if(!state.inspectMarker){
@@ -6169,6 +6422,8 @@
         state.inspectMarker.setLatLng(latLng);
       }
       state.inspectMarker.bindPopup(popupHtml(point, stats));
+      if(openPopup) state.inspectMarker.openPopup();
+      renderProfileData();
     }
 
     function nearestProfileIndex(latLng){
@@ -6184,6 +6439,18 @@
           bestIndex = i;
         }
       }
+      return bestIndex;
+    }
+
+    function nearestProfileIndexByDistance(distanceFt){
+      if(!Number.isFinite(distanceFt)) return null;
+      let bestIndex = null;
+      let bestDistance = Infinity;
+      state.profile.forEach((point, index) => {
+        if(!Number.isFinite(point.elevationFt) || !Number.isFinite(point.distanceFt)) return;
+        const distance = Math.abs(point.distanceFt - distanceFt);
+        if(distance < bestDistance){ bestDistance = distance; bestIndex = index; }
+      });
       return bestIndex;
     }
 
@@ -6234,6 +6501,7 @@
     }
 
     function removeActiveSection(){
+      cancelVertexDrag();
       removePendingDrawing();
       state.markers.forEach(m => map.removeLayer(m));
       state.markers = [];
@@ -6243,6 +6511,7 @@
       state.riskLine = null;
       state.profile = [];
       state.activeSavedLineId = null;
+      state.activeSavedSourceId = null;
       state.activeVertexLabels = [];
       state.activeVertexDistances = [];
       state.activeRoadSnapped = false;
@@ -6271,13 +6540,16 @@
 
     function archiveActiveSection(){
       const pts = currentLineLatLngs();
-      if(!pts || !state.profile.length || !state.activeVertexLabels.length) return;
+      if(!pts || !state.activeVertexLabels.length) return;
       const labels = state.activeVertexLabels.slice();
+      const saved = state.savedLines.find(line => line.id === state.activeSavedLineId);
       state.comparisonSections.push({
-        id:`drawn-${labels[0]}-${labels[labels.length - 1]}`,
+        id:state.activeSavedLineId || `drawn-${labels[0]}-${labels[labels.length - 1]}`,
+        name:saved?.name,
+        createdAt:saved?.createdAt,
         vertexLabels:labels,
         vertexDistances:state.activeVertexDistances.slice(),
-        controlPoints:state.markers.map(marker => marker.getLatLng()),
+        controlPoints:currentLineControls(),
         color:state.activeSectionColor,
         points:pts.map(point => L.latLng(point.lat, point.lng)),
         profile:state.profile.slice()
@@ -6294,7 +6566,13 @@
       updateStats([]);
       renderChart([]);
       renderSavedLines();
-      setText("chartStatus", "Waiting for a line");
+    }
+
+    function clearProfiles(){
+      state.startupDefaultSuppressed = true;
+      if(state.pendingDefaultReset) cancelPendingDefaultReset();
+      setDrawMode(false);
+      clearSection();
     }
 
     function markerIcon(label="", color=state.activeSectionColor){
@@ -6307,11 +6585,40 @@
       });
     }
 
+    function fitSectionBounds(path){
+      const gap = 28;
+      const mapRect = map.getContainer().getBoundingClientRect();
+      let top = gap;
+      let right = gap;
+      const overlapsMap = rect => rect && rect.width > 0 && rect.height > 0
+        && rect.right > mapRect.left && rect.left < mapRect.right
+        && rect.bottom > mapRect.top && rect.top < mapRect.bottom;
+      if(desktopWorkspaceTabs()){
+        for(const selector of [".rightStack", ".mapControl"]){
+          const rect = document.querySelector(selector)?.getBoundingClientRect();
+          if(overlapsMap(rect) && rect.left > mapRect.left){
+            right = Math.max(right, mapRect.right - rect.left + gap);
+          }
+        }
+        const brand = document.querySelector(".titleBar")?.getBoundingClientRect();
+        if(overlapsMap(brand)) top = Math.max(top, brand.bottom - mapRect.top + gap);
+      }
+      map.fitBounds(L.latLngBounds(path), {
+        paddingTopLeft:[gap, top],
+        paddingBottomRight:[right, gap],
+        animate:false
+      });
+    }
+
     function drawSection(pointsOrA, b=null, fit=false, savedLineId=null, append=false, options={}){
-      const points = (Array.isArray(pointsOrA) ? pointsOrA : [pointsOrA, b])
-        .filter(Boolean)
-        .map(point => L.latLng(point.lat, point.lng));
-      if(points.length < 2) return;
+      const controls = (Array.isArray(pointsOrA) ? pointsOrA : [pointsOrA, b]).filter(Boolean);
+      const path = options.path || controls;
+      if(controls.length < 2 || controls.some(point => !isGeographicPoint(point))
+        || !isUsableRoute(path)){
+        setText("roadStatus", "A road profile needs at least two distinct points with valid coordinates. Previous profiles kept.");
+        return;
+      }
+      const points = controls.map(point => L.latLng(point.lat, point.lng));
       if(append){
         archiveActiveSection();
         removeActiveSection();
@@ -6319,7 +6626,7 @@
         clearSection();
       }
       state.activeSavedLineId = savedLineId;
-      const path = options.path || points;
+      state.activeSavedSourceId = savedLineId;
       state.activeRoadSnapped = !!options.roadSnapped;
       state.activeVertexDistances = options.vertexDistances || polylineVertexDistances(points);
       const startLabel = state.nextEndpointNumber;
@@ -6330,6 +6637,7 @@
       state.markers = points.map((point, index) => L.marker(point, {
         icon:markerIcon(state.activeVertexLabels[index]),
         draggable:true,
+        bubblingMouseEvents:true,
         zIndexOffset:2000,
         title:`Section vertex ${state.activeVertexLabels[index]}`
       }).addTo(map));
@@ -6340,18 +6648,30 @@
         lineCap:"round"
       }).addTo(map);
       state.line.on("click", event => {
+        if(state.drawMode) return;
         const idx = nearestProfileIndex(event.latlng);
         if(idx !== null) selectProfileIndex(idx, true, true);
       });
+      const sectionLine = state.line;
       for(const marker of state.markers){
         let previousPosition = marker.getLatLng();
-        marker.on("dragstart", () => { previousPosition = marker.getLatLng(); });
+        let previousPath = path.slice();
+        marker.on("dragstart", () => {
+          if(state.line !== sectionLine || !state.markers.includes(marker)) return;
+          cancelVertexDrag();
+          const controls = currentLineControls();
+          previousPosition = controls[state.markers.indexOf(marker)];
+          previousPath = sectionLine.getLatLngs().slice();
+          state.vertexDrag = {line:sectionLine, marker, markers:state.markers, path:previousPath, controls};
+        });
         marker.on("click", event => {
-          if(event.originalEvent) L.DomEvent.stopPropagation(event.originalEvent);
-          const idx = nearestProfileIndex(marker.getLatLng());
+          if(state.drawMode) return;
+          if(event.originalEvent) L.DomEvent.stopPropagation(event);
+          const idx = nearestProfileIndexByDistance(state.activeVertexDistances[state.markers.indexOf(marker)]);
           if(idx !== null) selectProfileIndex(idx, true, true);
         });
         marker.on("drag", () => {
+          if(state.vertexDrag?.marker !== marker || state.vertexDrag.line !== state.line) return;
           if($("snapRoads").checked){
             showSnapPreview(marker.getLatLng());
             return;
@@ -6359,13 +6679,32 @@
           const pts = state.markers.map(m => m.getLatLng());
           state.line.setLatLngs(pts);
         });
-        marker.on("dragend", () => {
+        marker.on("dragend", event => {
+          const drag = state.vertexDrag;
+          if(!drag || drag.marker !== marker || drag.line !== sectionLine || state.line !== sectionLine) return;
           clearSnapPreview();
+          const position = marker.getLatLng();
+          if(map.latLngToLayerPoint(position).equals(map.latLngToLayerPoint(previousPosition))){
+            marker.setLatLng(previousPosition);
+            state.line.setLatLngs(previousPath);
+            state.vertexDrag = null;
+            return;
+          }
           const pts = state.markers.map(m => m.getLatLng());
+          if(!isUsableRoute(pts)){
+            marker.setLatLng(previousPosition);
+            state.line.setLatLngs(previousPath);
+            state.vertexDrag = null;
+            suppressRejectedVertexClick(event);
+            setText("roadStatus", "Keep at least two distinct points with valid coordinates. Previous road profile kept.");
+            return;
+          }
           if($("snapRoads").checked){
             const snap = nearestRoadPoint(marker.getLatLng());
             if(!snap){
               marker.setLatLng(previousPosition);
+              state.line.setLatLngs(previousPath);
+              state.vertexDrag = null;
               setText("roadStatus", "No municipal centerline here. Point kept in place; move inside the town boundary, near a dashed orange road.");
               return;
             }
@@ -6375,6 +6714,8 @@
             if(!route || route.path.length < 2){
               if(state.activeRoadSnapped || (route && route.path.length < 2)){
                 marker.setLatLng(previousPosition);
+                state.line.setLatLngs(previousPath);
+                state.vertexDrag = null;
                 setText("roadStatus", "No connected route to that point. Previous road profile kept.");
                 return;
               }
@@ -6383,6 +6724,8 @@
               marker.setLatLng(snappedPoint);
               state.line.setLatLngs(pts);
               state.activeVertexDistances = polylineVertexDistances(pts);
+              state.vertexDrag = null;
+              syncSavedLineIdentity();
               runProfile(pts);
               setText("roadStatus", `Point snapped to ${snap.edge.name}. Line remains freehand until the other points are on connected roads.`);
               return;
@@ -6391,25 +6734,27 @@
             state.markers.forEach((m,i) => m.setLatLng(route.points[i]));
             state.line.setLatLngs(route.path);
             state.activeVertexDistances = route.vertexDistances;
+            state.vertexDrag = null;
+            syncSavedLineIdentity();
             runProfile(route.path);
             setText("roadStatus", "");
           }else{
             state.activeRoadSnapped = false;
             state.activeVertexDistances = polylineVertexDistances(pts);
             state.line.setLatLngs(pts);
+            state.vertexDrag = null;
+            syncSavedLineIdentity();
             runProfile(pts);
           }
         });
       }
-      if(fit) map.fitBounds(L.latLngBounds(path).pad(.35));
+      state.markers.forEach(installVertexKeyboardControls);
+      if(fit) fitSectionBounds(path);
       runProfile(path);
     }
 
     function runProfile(points){
-      if(!state.raster){
-        setText("chartStatus", "DEM still loading");
-        return;
-      }
+      if(!state.raster) return;
       state.profile = buildProfilePath(points);
       state.profileXZoom = null;
       state.profileYZoom = null;
@@ -6420,11 +6765,37 @@
       updateInspection(false);
     }
 
+    function cancelDrawingNavigation(){
+      scheduleDrawingNavigation.generation = (scheduleDrawingNavigation.generation || 0) + 1;
+      window.clearTimeout(scheduleDrawingNavigation.timer);
+      scheduleDrawingNavigation.timer = null;
+    }
+
+    function scheduleDrawingNavigation(targetId, delay){
+      cancelDrawingNavigation();
+      const generation = scheduleDrawingNavigation.generation;
+      const line = state.line;
+      const drawing = state.drawMode;
+      scheduleDrawingNavigation.timer = window.setTimeout(() => {
+        if(generation !== scheduleDrawingNavigation.generation) return;
+        scheduleDrawingNavigation.timer = null;
+        if(desktopWorkspaceTabs() || activeRoadRiskDialog()
+          || $("shell").classList.contains("paneExpanded") || state.drawMode !== drawing || state.line !== line) return;
+        const target = $(targetId);
+        if(!target || target.closest("[hidden], [inert]")) return;
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+        target.scrollIntoView({ behavior, block:"start" });
+      }, delay);
+    }
+
     function setDrawMode(active){
+      cancelDrawingNavigation();
+      if(active && state.pendingDefaultReset) cancelPendingDefaultReset();
       if(active && $("snapRoads").checked && !state.roadNetwork){
         setText("roadStatus", "Centerlines unavailable or loading. Wait, or uncheck Snap to roads for freehand.");
         return;
       }
+      cancelVertexDrag();
       state.drawMode = active;
       state.drawingRoadSnapped = active && $("snapRoads").checked;
       removePendingDrawing();
@@ -6444,27 +6815,54 @@
       }
     }
 
-    function finishPendingLine(){
+    function finishPendingLine(event){
       if(!state.drawMode || state.pendingPoints.length < 2) return;
       const points = state.pendingPoints.map(point => L.latLng(point.lat, point.lng));
       const route = state.pendingRoadRoute;
       const options = route ? {path:route.path, vertexDistances:route.vertexDistances, roadSnapped:true} : {};
+      if(!isUsableRoute(route?.path || points)){
+        setText("drawPromptText", "Use at least two distinct points with valid coordinates. Your draft is unchanged.");
+        $("finishDrawBtn").disabled = true;
+        return;
+      }
       setDrawMode(false);
       drawSection(points, null, false, null, true, options);
-      if(window.matchMedia("(max-width: 1180px)").matches){
-        window.setTimeout(() => $("crossSectionPane").scrollIntoView({ behavior:"smooth", block:"start" }), 120);
+      if(event?.detail === 0 && !activeRoadRiskDialog() && !$("shell").classList.contains("paneExpanded")){
+        setMobileToolActive("crossSectionPane");
+        const pane = $("crossSectionPane");
+        if(!pane.closest("[hidden], [inert]")) pane.focus({preventScroll:true});
+      }
+      if(!desktopWorkspaceTabs()){
+        scheduleDrawingNavigation("crossSectionPane", 120);
       }
     }
 
+    function cancelPendingDefaultReset(){
+      state.pendingDefaultReset = false;
+      state.startupDefaultSuppressed = true;
+      setText("roadStatus", "Loading road centerlines…");
+    }
+
     function defaultSection(){
-      // Default municipality cross-section.
-      drawSection(
-        L.latLng(39.09038, -74.75224),
-        L.latLng(39.09038, -74.72603),
-        false,
-        null,
-        false
-      );
+      const road = state.defaultRoadProfile;
+      if(road){
+        const path = road.coordinates.map(point => L.latLng(point[1], point[0]));
+        const points = road.waypoints.map(point => L.latLng(point[1], point[0]));
+        const distances = polylineVertexDistances(path);
+        // Two draggable endpoint controls retain the avenue's complete traced
+        // geometry. Later edits and additional profiles use the normal tools.
+        drawSection(points, null, true, null, false, {
+          path,
+          roadSnapped:true,
+          vertexDistances:road.waypointIndices.map(index => distances[index])
+        });
+        setText("roadStatus", "");
+        return;
+      }
+      // Keep the app usable when the named road or its source cannot load.
+      const points = town.defaultRoad.fallback.map(([lng, lat]) => L.latLng(lat, lng));
+      drawSection(points, null, true, null, false);
+      setText("roadStatus", `${town.defaultRoad.label} unavailable. Showing an editable freehand sample; draw another line or reload to retry roads.`);
     }
 
     function csvCell(value){
@@ -6472,30 +6870,38 @@
       return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
     }
 
+    function spreadsheetText(value){
+      const text = String(value ?? "");
+      // Formula markers in text must not alter ordinary numeric fields.
+      return /^[\t\r\n]|^\s*[=+\-@＝＋－＠]/u.test(text) ? "'" + text : text;
+    }
+
     function exportLineRecords(){
       const records = state.comparisonSections.map(section => ({
         id:section.id,
-        name:`Profile ${profileNumberLabel(section.vertexLabels)}`,
+        name:section.name || `Profile ${profileNumberLabel(section.vertexLabels)}`,
         thresholdFt:state.thresholdFt,
-        createdAt:"",
+        createdAt:section.createdAt || "",
         points:section.points
       }));
       const active = currentLineLatLngs();
       if(active && state.activeVertexLabels.length){
+        const saved = state.savedLines.find(line => line.id === state.activeSavedLineId);
         records.push({
-          id:`drawn-${state.activeVertexLabels[0]}-${state.activeVertexLabels[state.activeVertexLabels.length - 1]}`,
-          name:`Profile ${profileNumberLabel(state.activeVertexLabels)}`,
+          id:state.activeSavedLineId || `drawn-${state.activeVertexLabels[0]}-${state.activeVertexLabels[state.activeVertexLabels.length - 1]}`,
+          name:saved?.name || `Profile ${profileNumberLabel(state.activeVertexLabels)}`,
           thresholdFt:state.thresholdFt,
-          createdAt:"",
+          createdAt:saved?.createdAt || "",
           points:active
         });
       }
-      records.push(...state.savedLines.map(line => ({
+      const exportedIds = new Set(records.map(record => record.id));
+      records.push(...state.savedLines.filter(line => !exportedIds.has(line.id)).map(line => ({
         id:line.id,
         name:line.name || "Saved line",
         thresholdFt:Number.isFinite(line.thresholdFt) ? line.thresholdFt : state.thresholdFt,
         createdAt:line.createdAt || "",
-        points:(line.points?.length ? line.points : [line.a, line.b]).map(point => L.latLng(point.lat, point.lng))
+        points:savedRoutePoints(line).map(point => L.latLng(point.lat, point.lng))
       })));
       return records;
     }
@@ -6506,10 +6912,12 @@
         "threshold_ft_navd88","clearance_ft","latitude","longitude"
       ]];
       for(const record of records){
-        const profile = buildProfilePath(record.points);
+        const profile = record.profile ?? buildProfilePath(record.points);
+        const spreadsheetId = spreadsheetText(record.id);
+        const spreadsheetName = spreadsheetText(record.name);
         profile.forEach((point, pointIndex) => rows.push([
-          record.id,
-          record.name,
+          spreadsheetId,
+          spreadsheetName,
           pointIndex,
           point.distanceFt.toFixed(2),
           Number.isFinite(point.elevationFt) ? point.elevationFt.toFixed(3) : "",
@@ -6525,21 +6933,19 @@
     function shapefileGeoJson(records){
       const features = [];
       for(const record of records){
-        const profile = buildProfilePath(record.points);
+        const profile = record.profile ?? buildProfilePath(record.points);
         features.push({
           type:"Feature",
           geometry:{
             type:"LineString",
-            coordinates:profile.length
-              ? profile.map(point => [point.lng, point.lat])
-              : record.points.map(point => [point.lng, point.lat])
+            coordinates:record.points.map(point => [point.lng, point.lat])
           },
           properties:{
             section_id:record.id,
             name:record.name,
             thresh_ft:Number(record.thresholdFt.toFixed(3)),
-            length_ft:Number(polylineVertexDistances(record.points).slice(-1)[0].toFixed(2)),
-            created:record.createdAt ? record.createdAt.slice(0, 10) : ""
+            length_ft:Number(profile.at(-1).distanceFt.toFixed(2)),
+            created:typeof record.createdAt === "string" ? record.createdAt.slice(0, 10) : ""
           }
         });
 
@@ -6580,7 +6986,15 @@
 
     async function shapefileArchive(records){
       if(!window.shpwrite?.zip) throw new Error("Shapefile export library did not load.");
-      return window.shpwrite.zip(shapefileGeoJson(records), {
+      if(!window.JSZip) throw new Error("ZIP library did not load. CSV export is available.");
+      const collection = encodeDbfText(shapefileGeoJson(records));
+      // shp-write 0.4.3 counts a plain LineString's vertices as parts. Its
+      // multipart entry point correctly writes each route as one line part.
+      collection.features = collection.features.map(feature => feature.geometry.type === "LineString" ? {
+        ...feature,
+        geometry:{type:"MultiLineString", coordinates:[feature.geometry.coordinates]}
+      } : feature);
+      const archive = await window.shpwrite.zip(collection, {
         folder:"roads_at_risk_cross_sections",
         outputType:"arraybuffer",
         compression:"STORE",
@@ -6589,9 +7003,31 @@
           polyline:"cross_sections"
         }
       });
+      const zip = await window.JSZip.loadAsync(archive);
+      for(const name of Object.keys(zip.files)){
+        if(name.endsWith("/elevation_points.dbf")){
+          const dbf = await zip.file(name).async("uint8array");
+          const decoder = new TextDecoder();
+          // The writer declares three decimals for all numeric fields.
+          // Declare all eight coordinate decimals so GIS copies preserve them.
+          for(let offset=32; dbf[offset] !== 0x0d && offset + 32 <= dbf.length; offset += 32){
+            const field = decoder.decode(dbf.subarray(offset, offset + 11)).split("\0")[0];
+            if(field === "latitude" || field === "longitude") dbf[offset + 17] = 8;
+          }
+          zip.file(name, dbf);
+        }
+        if(name.endsWith(".dbf")) zip.file(name.slice(0, -4) + ".cpg", "UTF-8");
+      }
+      return zip.generateAsync({type:"arraybuffer", compression:"STORE"});
     }
 
     async function exportSections(){
+      const fromDrag = state.vertexDrag?.line === state.line && !!state.vertexDrag;
+      const invalidSaved = state.savedLines.find(line => !isUsableRoute(savedRoutePoints(line)));
+      if(invalidSaved){
+        setExportStatus(`Cannot export "${invalidSaved.name || "saved route"}": its saved geometry is invalid or unsupported, or has fewer than two distinct points. Stored routes are unchanged. Delete the invalid saved route or redraw it, then retry.`);
+        return;
+      }
       const records = exportLineRecords();
       if(!records.length){
         setExportStatus("Draw or save at least one cross section before exporting.");
@@ -6601,26 +7037,32 @@
         setExportStatus("Wait for the DEM to finish loading before exporting.");
         return;
       }
+      const invalid = records.find(record => !isUsableRoute(record.points));
+      if(invalid){
+        setExportStatus(`Cannot export "${invalid.name || "this route"}": it needs at least two distinct points with valid coordinates. Stored routes are unchanged. Delete the invalid saved route or redraw it, then retry.`);
+        return;
+      }
       const format = $("exportFormat")?.value || "csv";
       const button = $("exportBtn");
       button.disabled = true;
       setExportStatus(`Preparing ${format === "shp" ? "SHP" : format.toUpperCase()} for ${records.length} cross section${records.length === 1 ? "" : "s"}...`);
       try{
+        const sampled = records.map(record => ({...record, profile:buildProfilePath(record.points)}));
         if(format === "csv"){
-          downloadBlob(new Blob([csvForLines(records)], { type:"text/csv;charset=utf-8" }), "roads-at-risk-cross-sections.csv");
+          downloadBlob(new Blob([csvForLines(sampled)], { type:"text/csv;charset=utf-8" }), "roads-at-risk-cross-sections.csv");
         }else{
-          const shpZip = await shapefileArchive(records);
+          const shpZip = await shapefileArchive(sampled);
           if(format === "shp"){
             downloadBlob(new Blob([shpZip], { type:"application/zip" }), "roads-at-risk-cross-sections-shp.zip");
           }else{
             if(!window.JSZip) throw new Error("ZIP library did not load.");
             const zip = await window.JSZip.loadAsync(shpZip);
-            zip.file("roads-at-risk-cross-sections.csv", csvForLines(records));
+            zip.file("roads-at-risk-cross-sections.csv", csvForLines(sampled));
             const combined = await zip.generateAsync({ type:"blob", compression:"DEFLATE" });
             downloadBlob(combined, "roads-at-risk-cross-sections-csv-shp.zip");
           }
         }
-        setExportStatus(`${format === "both" ? "CSV + SHP" : format.toUpperCase()} exported with WGS84 coordinates and sampled elevations for ${records.length} cross section${records.length === 1 ? "" : "s"}.`);
+        setExportStatus(`${format === "both" ? "CSV + SHP" : format.toUpperCase()} exported with WGS84 coordinates and sampled elevations for ${records.length} cross section${records.length === 1 ? "" : "s"}.${fromDrag ? " Captured the profile from before the endpoint drag." : ""}`);
       }catch(err){
         console.error(err);
         setExportStatus(err?.message || "Export failed. Please try again.");
@@ -6630,6 +7072,10 @@
     }
 
     async function downloadScreenshot(){
+      if(state.vertexDrag?.line === state.line && state.vertexDrag){
+        setExportStatus("Release the endpoint before capturing a PNG image.");
+        return;
+      }
       if(!window.html2canvas){
         setExportStatus("Screenshot library did not load.");
         return;
@@ -6656,31 +7102,293 @@
       }
     }
 
+    function isGeographicPoint(point){
+      return Number.isFinite(point?.lat) && Number.isFinite(point?.lng)
+        && Math.abs(point.lat) <= 90 && Math.abs(point.lng) <= 180;
+    }
+
+    function isUsableRoute(points){
+      if(!Array.isArray(points) || points.length < 2
+        || points.some(point => !isGeographicPoint(point))
+        || points.some((point, index) => index > 0 && Math.abs(point.lng - points[index - 1].lng) > 180)) return false;
+      const first = points[0];
+      return points.some(point => point.lat !== first.lat || point.lng !== first.lng);
+    }
+
+    function savedRoutePoints(line){
+      const {points} = line;
+      return points == null || (Array.isArray(points) && !points.length) ? [line.a, line.b] : points;
+    }
+
+    function savedVertexDistances(path, controls){
+      if(!Array.isArray(controls) || controls.length < 2 || controls.some(point => !isGeographicPoint(point))) return null;
+      const last = path.length - 1;
+      const matches = (control, index) => Math.abs(control.lat - path[index].lat) <= 1e-8
+        && Math.abs(control.lng - path[index].lng) <= 1e-8;
+      if(!matches(controls[0], 0) || !matches(controls.at(-1), last)) return null;
+
+      // Derive the stations along the stored path so a closed or retraced line
+      // keeps its endpoint distances and stored station metadata cannot skew inspection.
+      const distances = polylineVertexDistances(path);
+      if(!Number.isFinite(distances[last]) || distances[last] <= 0) return null;
+      const stations = [0];
+      let pathIndex = 0;
+      for(const control of controls.slice(1, -1)){
+        while(pathIndex < last && !matches(control, pathIndex)) pathIndex++;
+        if(!matches(control, pathIndex)) return null;
+        stations.push(distances[pathIndex]);
+      }
+      stations.push(distances[last]);
+      return stations;
+    }
+
+    function suppressRejectedVertexClick(event){
+      // Restoring a dragged marker can expose another marker under mouseup.
+      // Consume only the click completing this gesture, before Leaflet inspects it.
+      if(!Number.isFinite(event?.distance)) return;
+      const container = map.getContainer();
+      const stop = event => { event.preventDefault(); event.stopImmediatePropagation(); };
+      container.addEventListener("click", stop, {capture:true, once:true});
+      window.setTimeout(() => container.removeEventListener("click", stop, true), 0);
+    }
+
     function currentLineLatLngs(){
-      const linePoints = state.line?.getLatLngs?.();
+      const linePoints = state.vertexDrag?.line === state.line && state.vertexDrag
+        ? state.vertexDrag.path : state.line?.getLatLngs?.();
       return Array.isArray(linePoints) && linePoints.length >= 2 ? linePoints.slice() : null;
+    }
+
+    function currentLineControls(){
+      const controls = state.vertexDrag?.line === state.line && state.vertexDrag
+        ? state.vertexDrag.controls : state.markers.map(marker => marker.getLatLng());
+      return controls.map(point => ({lat:point.lat, lng:point.lng}));
+    }
+
+    function cancelVertexDrag(){
+      const drag = state.vertexDrag;
+      if(!drag) return;
+      state.vertexDrag = null;
+      const handler = drag.marker.dragging;
+      const draggable = handler?._draggable;
+      if(draggable?._moving){
+        cancelVertexDrag.pendingClickCleanup?.();
+        const container = map.getContainer();
+        const touch = !!draggable._lastEvent?.touches || draggable._lastEvent?.pointerType === "touch";
+        const releases = touch ? ["touchend", "touchcancel"] : ["mouseup"];
+        let released = false;
+        const release = () => { released = true; };
+        const newIntent = () => { if(released) cleanup(); };
+        const consume = event => {
+          if(event.detail === 0) return;
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          cleanup();
+        };
+        const cleanup = () => {
+          container.removeEventListener("click", consume, true);
+          releases.forEach(type => document.removeEventListener(type, release, true));
+          document.removeEventListener("pointerdown", newIntent, true);
+          document.removeEventListener("keydown", newIntent, true);
+          window.removeEventListener("blur", cleanup);
+          if(cancelVertexDrag.pendingClickCleanup === cleanup) cancelVertexDrag.pendingClickCleanup = null;
+        };
+        cancelVertexDrag.pendingClickCleanup = cleanup;
+        container.addEventListener("click", consume, {capture:true});
+        releases.forEach(type => document.addEventListener(type, release, {capture:true}));
+        document.addEventListener("pointerdown", newIntent, {capture:true});
+        document.addEventListener("keydown", newIntent, {capture:true});
+        window.addEventListener("blur", cleanup, {once:true});
+      }
+      if(drag.line === state.line){
+        drag.line.setLatLngs(drag.path);
+        drag.markers.forEach((marker, index) => marker.setLatLng(drag.controls[index]));
+      }
+      clearSnapPreview();
+      if(handler?.enabled?.()){
+        handler.disable();
+        if(state.line === drag.line && state.markers.includes(drag.marker)) handler.enable();
+      }
+    }
+
+    function syncSavedLineIdentity(){
+      const sourceId = state.activeSavedSourceId || state.activeSavedLineId;
+      if(!sourceId) return;
+      const source = state.savedLines.find(line => line.id === sourceId);
+      const points = currentLineLatLngs();
+      const savedPoints = source ? savedRoutePoints(source) : [];
+      const unchanged = Array.isArray(savedPoints) && points?.length === savedPoints.length && points.every((point, index) => {
+        const saved = savedPoints[index];
+        return saved && Math.abs(point.lat - saved.lat) < 1e-10 && Math.abs(point.lng - saved.lng) < 1e-10;
+      });
+      state.activeSavedSourceId = source?.id || null;
+      const activeId = unchanged ? source.id : null;
+      if(state.activeSavedLineId !== activeId){
+        state.activeSavedLineId = activeId;
+        renderSavedLines();
+      }
     }
 
     function sanitizeLineName(name){
       return String(name || "").trim().replace(/\s+/g, " ").slice(0, 32);
     }
 
-    function loadSavedLines(){
-      try{
-        const rows = JSON.parse(localStorage.getItem(SAVED_LINES_KEY) || "[]");
-        state.savedLines = Array.isArray(rows)
-          ? rows.filter(row => row?.id && ((Array.isArray(row.points) && row.points.length >= 2) || (row?.a && row?.b)))
-          : [];
-      }catch(err){
-        console.warn("Saved line load failed", err);
-        state.savedLines = [];
-      }
+    function identifiableSavedLines(rows){
+      return rows.filter(row => typeof row?.id === "string" && row.id.trim());
+    }
+
+    function readSavedLines(raw=localStorage.getItem(SAVED_LINES_KEY) || "[]"){
+      const rows = JSON.parse(raw);
+      if(!Array.isArray(rows)) throw new Error("Saved lines are not a list.");
+      return rows;
+    }
+
+    function applySavedLines(rows, activeId=state.activeSavedLineId){
+      const lines = identifiableSavedLines(rows);
+      state.savedLines = lines;
+      state.activeSavedLineId = lines.some(line => line.id === activeId) ? activeId : null;
+      if(state.activeSavedLineId) state.activeSavedSourceId = state.activeSavedLineId;
+      else if(!lines.some(line => line.id === state.activeSavedSourceId)) state.activeSavedSourceId = null;
       renderSavedLines();
     }
 
-    function persistSavedLines(){
-      localStorage.setItem(SAVED_LINES_KEY, JSON.stringify(state.savedLines));
-      renderSavedLines();
+    function handleSavedLinesStorage(event){
+      if(event.key !== SAVED_LINES_KEY && event.key !== null) return;
+      try{
+        if(event.storageArea && event.storageArea !== localStorage) return;
+        // Events can arrive after a later write. Always read the current list.
+        const lines = readSavedLines();
+        if(JSON.stringify(identifiableSavedLines(lines)) === JSON.stringify(state.savedLines)) return;
+        applySavedLines(lines);
+        setExportStatus("Saved lines updated in another tab. Your current cross section is unchanged.");
+      }catch(err){
+        console.warn("Saved line refresh failed", err);
+        setExportStatus("Could not refresh saved lines from another tab. Your current cross section is unchanged; reload when browser storage is available.");
+      }
+    }
+
+    function loadSavedLines(){
+      try{
+        applySavedLines(readSavedLines());
+      }catch(err){
+        console.warn("Saved line load failed", err);
+        applySavedLines([]);
+      }
+      window.addEventListener("storage", handleSavedLinesStorage);
+    }
+
+    function openSavedLinesCoordinator(){
+      if(openSavedLinesCoordinator.pending) return openSavedLinesCoordinator.pending;
+      const pending = new Promise((resolve, reject) => {
+        if(typeof indexedDB === "undefined"){
+          reject(new Error("Saved line coordination is unavailable."));
+          return;
+        }
+        const request = indexedDB.open(`${SAVED_LINES_KEY}-coordinator`, 1);
+        let blocked = false;
+        request.onupgradeneeded = () => request.result.createObjectStore("updates");
+        request.onerror = () => reject(request.error || new Error("Saved line coordination could not open."));
+        request.onblocked = () => {
+          blocked = true;
+          reject(new Error("Saved line coordination is blocked by another tab."));
+        };
+        request.onsuccess = () => {
+          const database = request.result;
+          if(blocked){ database.close(); return; }
+          database.onversionchange = () => {
+            database.close();
+            openSavedLinesCoordinator.pending = null;
+          };
+          resolve(database);
+        };
+      });
+      openSavedLinesCoordinator.pending = pending;
+      pending.catch(() => {
+        if(openSavedLinesCoordinator.pending === pending) openSavedLinesCoordinator.pending = null;
+      });
+      return pending;
+    }
+
+    async function withSavedLinesTransaction(update){
+      const database = await openSavedLinesCoordinator();
+      return new Promise((resolve, reject) => {
+        const transaction = database.transaction("updates", "readwrite");
+        let applied = false, result, failure;
+        const request = transaction.objectStore("updates").get("saved-lines");
+        request.onsuccess = () => {
+          // Keep this callback synchronous: the read/write transaction holds the
+          // coordinator until the latest localStorage list has been updated.
+          try{
+            result = update();
+            applied = true;
+          }catch(err){
+            failure = err;
+            transaction.abort();
+          }
+        };
+        const finish = () => {
+          // localStorage is already committed if update succeeded, even if the
+          // otherwise empty coordinator transaction subsequently aborts.
+          if(applied) resolve(result);
+          else reject(failure || transaction.error || new Error("Saved line coordination failed."));
+        };
+        transaction.oncomplete = finish;
+        transaction.onabort = finish;
+        transaction.onerror = () => {};
+      });
+    }
+
+    async function withSavedLinesLock(update){
+      if(typeof navigator !== "undefined" && navigator.locks?.request){
+        let entered = false;
+        try{
+          return await navigator.locks.request(`${SAVED_LINES_KEY}-write`, async () => {
+            entered = true;
+            let started = false;
+            try{
+              // The shared transaction also excludes tabs using the fallback.
+              return await withSavedLinesTransaction(() => {
+                started = true;
+                return update();
+              });
+            }catch(err){
+              if(started) throw err;
+              // Web Locks still protects this write if IndexedDB is blocked.
+              return update();
+            }
+          });
+        }catch(err){
+          if(entered) throw err;
+        }
+      }
+      return withSavedLinesTransaction(update);
+    }
+
+    async function persistSavedLines({line, deleteId, nextActiveId=() => state.activeSavedLineId}){
+      try{
+        return await withSavedLinesLock(() => {
+          // Mutate the current shared list, never this tab's stale snapshot.
+          const stored = localStorage.getItem(SAVED_LINES_KEY) || "[]";
+          const lines = readSavedLines(stored);
+          const nextLines = line ? [line, ...lines] : lines.filter(item => item?.id !== deleteId);
+          // Insert new records without reserializing existing damaged rows.
+          const nextStored = line
+            ? stored.replace("[", () => `[${JSON.stringify(line)}${lines.length ? "," : ""}`)
+            : JSON.stringify(nextLines);
+          const activeId = nextActiveId();
+          localStorage.setItem(SAVED_LINES_KEY, nextStored);
+          try{
+            applySavedLines(nextLines, activeId);
+          }catch(err){
+            // The shared storage write succeeded; a rendering error must not
+            // report that it failed or cause the mutation to be retried.
+            console.warn("Saved line list refresh failed", err);
+          }
+          return true;
+        });
+      }catch(err){
+        console.warn("Saved line write failed", err);
+        return false;
+      }
     }
 
     function renderSavedLineLayers(){
@@ -6690,8 +7398,9 @@
       if(!map._loaded) return;
       for(const saved of state.savedLines){
         if(saved.id === state.activeSavedLineId) continue;
-        const savedPoints = (saved.points?.length ? saved.points : [saved.a, saved.b])
-          .map(point => L.latLng(point.lat, point.lng));
+        const path = savedRoutePoints(saved);
+        if(!isUsableRoute(path)) continue;
+        const savedPoints = path.map(point => L.latLng(point.lat, point.lng));
         const layer = L.polyline(savedPoints, {
           color:"#a78bfa",
           weight:4,
@@ -6699,9 +7408,12 @@
           lineCap:"round",
           dashArray:"7 5"
         }).addTo(savedLineLayerGroup);
-        layer.bindTooltip(saved.name || "Saved cross section", { sticky:true, direction:"top" });
+        const tooltip = document.createElement("span");
+        tooltip.textContent = saved.name || "Saved cross section";
+        layer.bindTooltip(tooltip, { sticky:true, direction:"top" });
         layer.on("click", event => {
-          if(event.originalEvent) L.DomEvent.stopPropagation(event.originalEvent);
+          if(state.drawMode) return;
+          if(event.originalEvent) L.DomEvent.stopPropagation(event);
           useSavedLine(saved.id);
         });
         state.savedLineLayers.set(saved.id, layer);
@@ -6713,12 +7425,34 @@
       setText("savedLineCount", String(state.savedLines.length));
       renderSavedLineLayers();
       if(!list) return;
+      const focused = document.activeElement;
+      const focusedButton = list.contains(focused) ? focused.closest("button[data-saved-action]") : null;
+      const focusedRow = focusedButton?.closest(".savedLine");
+      const savedFocus = focusedRow && !list.closest("[inert], [hidden]") ? {
+        id:focusedRow.dataset.savedLineId,
+        action:focusedButton.dataset.savedAction,
+        index:[...list.querySelectorAll(".savedLine")].indexOf(focusedRow)
+      } : null;
+      const restoreFocus = () => {
+        if(!savedFocus || list.closest("[inert], [hidden]")) return;
+        // Rebuilding the list normally moves focus to body. Leave any focus
+        // deliberately moved elsewhere (including into a dialog) alone.
+        if(document.activeElement && document.activeElement !== document.body && document.activeElement !== focused) return;
+        const rows = [...list.querySelectorAll(".savedLine")];
+        const row = rows.find(item => item.dataset.savedLineId === savedFocus.id)
+          || rows[Math.min(Math.max(savedFocus.index, 0), rows.length - 1)];
+        const buttons = row ? [...row.querySelectorAll("button[data-saved-action]")].filter(button => !button.disabled) : [];
+        const target = buttons.find(button => button.dataset.savedAction === savedFocus.action)
+          || buttons[0] || $("lineNameInput");
+        if(target && !target.closest("[inert], [hidden]") && target.getClientRects().length) target.focus({preventScroll:true});
+      };
       list.textContent = "";
       if(!state.savedLines.length){
         const empty = document.createElement("div");
         empty.className = "emptySaved";
         empty.textContent = "No saved lines yet.";
         list.appendChild(empty);
+        restoreFocus();
         return;
       }
       for(const line of state.savedLines){
@@ -6745,75 +7479,104 @@
         deleteButton.dataset.savedAction = "delete";
         row.appendChild(deleteButton);
 
+        if(!isUsableRoute(savedRoutePoints(line))){
+          const warning = document.createElement("p");
+          warning.className = "savedLineWarning";
+          warning.textContent = "Invalid saved geometry. Delete this route or redraw it before loading or exporting it.";
+          row.appendChild(warning);
+        }
+
         list.appendChild(row);
       }
+      restoreFocus();
     }
 
-    function saveCurrentLine(){
+    async function saveCurrentLine(){
       const pts = currentLineLatLngs();
       if(!pts){
         setExportStatus("Draw a cross section before saving it.");
         return;
       }
+      if(!isUsableRoute(pts)){
+        setExportStatus("Cannot save this route. Use at least two distinct points with valid coordinates. Existing saved routes are unchanged.");
+        return;
+      }
       const input = $("lineNameInput");
+      const typedName = input?.value;
+      const displayedLine = state.line;
+      const fromDrag = state.vertexDrag?.line === displayedLine && !!state.vertexDrag;
+      const previousActiveId = state.activeSavedLineId;
       const fallback = `Line ${state.savedLines.length + 1}`;
       const name = sanitizeLineName(input?.value) || fallback;
       const a = pts[0];
       const b = pts[pts.length - 1];
       const id = `line-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
-      state.savedLines.unshift({
+      const line = {
         id,
         name,
         thresholdFt:state.thresholdFt,
         a:{ lat:a.lat, lng:a.lng },
         b:{ lat:b.lat, lng:b.lng },
         points:pts.map(point => ({ lat:point.lat, lng:point.lng })),
-        controlPoints:state.markers.map(marker => ({lat:marker.getLatLng().lat, lng:marker.getLatLng().lng})),
+        controlPoints:currentLineControls(),
         roadSnapped:state.activeRoadSnapped,
         vertexDistances:state.activeVertexDistances.slice(),
         createdAt:new Date().toISOString()
-      });
-      state.savedLines = state.savedLines.slice(0, 12);
-      state.activeSavedLineId = id;
-      if(input) input.value = "";
-      persistSavedLines();
-      setExportStatus(`Saved "${name}". Draw and save another line to keep both on the map.`);
+      };
+      const selectSavedLine = () => {
+        const current = currentLineLatLngs();
+        return state.line === displayedLine && state.activeSavedLineId === previousActiveId && current?.length === line.points.length
+          && current.every((point, index) => point.lat === line.points[index].lat && point.lng === line.points[index].lng)
+          ? id : state.activeSavedLineId;
+      };
+      if(!await persistSavedLines({line, nextActiveId:selectSavedLine})){
+        setExportStatus("Could not save this line. Browser storage is full or unavailable; existing saved lines are unchanged. Export your profiles to keep a copy, then free storage or enable it and retry.");
+        return;
+      }
+      if(input && input.value === typedName) input.value = "";
+      setExportStatus(`Saved "${name}".${fromDrag ? " Captured the profile from before the endpoint drag." : " Draw and save another line to keep both on the map."}`);
     }
 
     function useSavedLine(id){
       const line = state.savedLines.find(item => item.id === id);
       if(!line) return;
+      const savedPoints = savedRoutePoints(line);
+      const controls = line.controlPoints === undefined ? savedPoints : line.controlPoints;
+      const vertexDistances = isUsableRoute(savedPoints) ? savedVertexDistances(savedPoints, controls) : null;
+      if(!vertexDistances){
+        setExportStatus(`Cannot activate "${line.name || "saved line"}": it needs at least two distinct points with valid coordinates. Your current profile and the saved record are unchanged. Delete this saved route or redraw it.`);
+        return;
+      }
+      if(state.pendingDefaultReset) cancelPendingDefaultReset();
       setDrawMode(false);
-      setThreshold(toDisplayDatum(line.thresholdFt ?? state.thresholdFt));
-      const points = (line.points?.length ? line.points : [line.a, line.b])
-        .map(point => L.latLng(point.lat, point.lng));
-      const controls = line.controlPoints?.length >= 2 ? line.controlPoints : points;
+      if(Number.isFinite(line.thresholdFt)) setThreshold(toDisplayDatum(line.thresholdFt));
+      const points = savedPoints.map(point => L.latLng(point.lat, point.lng));
       drawSection(controls, null, true, line.id, false, {
-        path:points, roadSnapped:line.roadSnapped, vertexDistances:line.vertexDistances
+        path:points, roadSnapped:line.roadSnapped, vertexDistances
       });
       setExportStatus(`Loaded "${line.name || "saved line"}".`);
     }
 
-    function deleteSavedLine(id){
+    async function deleteSavedLine(id){
       const line = state.savedLines.find(item => item.id === id);
-      state.savedLines = state.savedLines.filter(item => item.id !== id);
-      if(state.activeSavedLineId === id) state.activeSavedLineId = null;
-      persistSavedLines();
-      setExportStatus(line ? `Deleted "${line.name || "saved line"}".` : "Saved line deleted.");
+      if(!line){
+        setExportStatus("Saved line already removed.");
+        return;
+      }
+      if(!await persistSavedLines({deleteId:id})){
+        setExportStatus("Could not delete this saved line because browser storage could not be updated safely. Saved lines are unchanged; enable browser storage and retry.");
+        return;
+      }
+      setExportStatus(`Deleted "${line.name || "saved line"}".`);
     }
 
     function updateFloodStatsPanel(){
       const stats = state.floodStats;
       if(!stats) return;
-      const record = stats.topEvents?.[0];
-      setText("gaugePill", stats.gaugeName || "");
-      setText("recordTide", record ? `${record.heightNavd88Ft.toFixed(2)} ft` : "-");
-      setText("minorDays", `${fmtCount(stats.archive?.classificationCounts?.minor)} days`);
-      setText("highTideCount", fmtCount(stats.tideModel?.highTideCount));
-      setText("trendRate", Number.isFinite(stats.tideModel?.trendFtPerYear) ? `${(stats.tideModel.trendFtPerYear * 100).toFixed(1)} ft/cent` : "-");
       const uncertaintyInput = $("uncertaintyNumber");
       if(uncertaintyInput){
-        uncertaintyInput.value = (stats.verticalUncertaintyFt || state.uncertaintyFt).toFixed(2);
+        const uncertainty = stats.verticalUncertaintyFt;
+        uncertaintyInput.value = (Number.isFinite(uncertainty) ? uncertainty : state.uncertaintyFt).toFixed(2);
         state.uncertaintyFt = Number(uncertaintyInput.value);
       }
       updateThresholdControls();
@@ -6823,8 +7586,14 @@
       const displayValue = toDisplayDatum(state.thresholdFt);
       const number = $("thresholdNumber");
       if(number){
-        number.value = Number.isFinite(displayValue) ? displayValue.toFixed(2) : "";
+        if(!number.dataset.thresholdDirty){
+          number.value = Number.isFinite(displayValue) ? String(displayValue) : "";
+          number.dataset.thresholdAppliedValue = number.value;
+          number.dataset.thresholdAppliedDatum = activeDatum();
+        }
         number.setAttribute("aria-label", `Custom stage in feet ${datumLabel()}`);
+        number.min = String(toDisplayDatum(-2));
+        number.max = String(toDisplayDatum(14));
       }
       setText("thresholdPill", `${Number.isFinite(displayValue) ? displayValue.toFixed(2) : "-"} ft ${datumLabel()}`);
       const thresholds = activeDatumThresholds();
@@ -6832,18 +7601,42 @@
       document.querySelectorAll("[data-threshold-level]").forEach(button => {
         const level = button.dataset.thresholdLevel;
         const value = thresholds[level];
+        button.disabled = !Number.isFinite(value);
         button.innerHTML = `<span>${labels[level] || level}</span><small>${Number.isFinite(value) ? value.toFixed(2) : "-"} ft</small>`;
       });
       document.querySelectorAll("[data-datum]").forEach(button => {
         const active = button.dataset.datum === activeDatum();
+        button.setAttribute("aria-pressed", String(active));
         button.classList.toggle("active", active);
         button.classList.toggle("secondary", !active);
       });
+      setText("thresholdFieldDatum", datumLabel());
+    }
+
+    function setThresholdValidation(message=""){
+      const input = $("thresholdNumber");
+      if(input){
+        if(message) input.setAttribute("aria-invalid", "true");
+        else input.removeAttribute("aria-invalid");
+      }
+      const status = $("thresholdValidation");
+      if(status){
+        status.textContent = message;
+        status.hidden = !message;
+      }
     }
 
     function setThreshold(value){
-      const next = fromDisplayDatum(value);
-      if(!Number.isFinite(next)) return;
+      const number = $("thresholdNumber");
+      const unchanged = typeof value === "string" && number && value === number.dataset.thresholdAppliedValue
+        && number.dataset.thresholdAppliedDatum === activeDatum();
+      const next = unchanged ? state.thresholdFt : fromDisplayDatum(value);
+      if(!Number.isFinite(next)){
+        setThresholdValidation("Enter a numeric water stage before applying it.");
+        return;
+      }
+      setThresholdValidation();
+      if(number) delete number.dataset.thresholdDirty;
       state.thresholdFt = clamp(next, -2, 14);
       updateThresholdControls();
       if(state.profile.length){
@@ -6861,7 +7654,10 @@
 
     function setDatum(datum){
       const next = datum === "mllw" ? "mllw" : "navd88";
-      if(next === state.datum) return;
+      if(next === state.datum || !state.floodStats) return;
+      setThresholdValidation();
+      const number = $("thresholdNumber");
+      if(number) delete number.dataset.thresholdDirty;
       state.datum = next;
       state.profileYZoom = null;
       updateThresholdControls();
@@ -6872,19 +7668,34 @@
     }
 
     function setUncertainty(value){
-      state.uncertaintyFt = clamp(Number(value), 0, 3);
-      $("uncertaintyNumber").value = state.uncertaintyFt.toFixed(2);
-      updateInspection(false);
+      const input = $("uncertaintyNumber");
+      const parsed = typeof value === "number" ? value
+        : typeof value === "string" && value.trim() ? Number(value) : NaN;
+      if(!Number.isFinite(parsed)){
+        input.value = state.uncertaintyFt.toFixed(2);
+        return false;
+      }
+      const next = Number(clamp(parsed, 0, 3).toFixed(2));
+      input.value = next.toFixed(2);
+      if(next !== state.uncertaintyFt){
+        state.uncertaintyFt = next;
+        updateInspection(false);
+      }
+      return true;
     }
 
     async function loadApp(){
       const [metadata, boundary, floodStats] = await Promise.all([
-        fetch(METADATA_URL).then(r => r.json()),
-        fetch(BOUNDARY_URL).then(r => r.json()),
-        fetch(FLOOD_STATS_URL).then(r => r.json())
+        readAppJson(METADATA_URL),
+        townBoundary(),
+        readAppJson(FLOOD_STATS_URL)
       ]);
+      configuredMllwOffset(floodStats); // Reject inconsistent municipal datum configuration.
+      const minorStageFt = floodStats.thresholds?.navd88?.minor;
+      if(!Number.isFinite(minorStageFt)) throw new Error("Town data must define a minor flood stage in feet NAVD88.");
       state.metadata = metadata;
       state.floodStats = floodStats;
+      if(!Number.isFinite(state.thresholdFt)) state.thresholdFt = minorStageFt;
       state.width = metadata.width;
       state.height = metadata.height;
       state.nodata = metadata.nodata;
@@ -6892,7 +7703,9 @@
       updateFloodStatsPanel();
 
       const leafletBounds = L.latLngBounds(metadata.leafletBounds);
-      map.fitBounds(leafletBounds.pad(.1));
+      if(!map._loaded) map.fitBounds(leafletBounds.pad(.1));
+      // Saved geometry is independent of terrain and the optional initial line.
+      renderSavedLines();
       boundaryLayer.addData(boundary);
       state.hillshadeOverlay = L.imageOverlay(metadata.files.hillshadePng, metadata.leafletBounds, {
         opacity:.38,
@@ -6904,34 +7717,48 @@
       if(!demResponse.ok) throw new Error(`DEM request failed: ${demResponse.status}`);
       const tiff = await GeoTIFF.fromArrayBuffer(await demResponse.arrayBuffer());
       const image = await tiff.getImage();
+      if(image.getWidth() !== metadata.width || image.getHeight() !== metadata.height){
+        throw new Error("DEM dimensions do not match the town metadata.");
+      }
       const raster = await image.readRasters({ interleave:true });
       state.raster = raster;
       setReady(true, "Ready");
-      defaultSection();
+    }
+
+    async function initializeProfiles(){
+      const terrainReady = loadApp().then(() => {
+        // Completed geometry can be retained before terrain is available.
+        for(const section of state.comparisonSections){
+          if(!section.profile?.length) section.profile = buildProfilePath(section.points);
+        }
+        const existingLine = currentLineLatLngs();
+        if(existingLine) runProfile(existingLine);
+      });
+      await Promise.all([terrainReady, loadRoadCenterlines()]);
+      if(!currentLineLatLngs() && !state.drawMode && !state.pendingPoints.length && !state.startupDefaultSuppressed){
+        defaultSection();
+      }
     }
 
     $("drawBtn").addEventListener("click", () => {
       if(state.drawMode) return;
       setDrawMode(true);
       if(!state.drawMode) return;
-      if(window.matchMedia("(max-width: 1180px)").matches){
+      if(!desktopWorkspaceTabs()){
         if($("shell").classList.contains("paneExpanded")) togglePaneExpansion("crossSectionPane");
-        window.setTimeout(() => $("map").scrollIntoView({ behavior:"smooth", block:"start" }), 80);
+        scheduleDrawingNavigation("map", 80);
       }
     });
     $("finishDrawBtn").addEventListener("click", finishPendingLine);
     $("cancelDrawBtn").addEventListener("click", () => setDrawMode(false));
-    $("clearProfilesBtn").addEventListener("click", () => {
-      setDrawMode(false);
-      clearSection();
-    });
-    $("clearBtn").addEventListener("click", () => {
-      setDrawMode(false);
-      clearSection();
-    });
+    $("clearProfilesBtn").addEventListener("click", clearProfiles);
+    $("clearBtn").addEventListener("click", clearProfiles);
     $("sampleBtn").addEventListener("click", () => {
       setDrawMode(false);
-      defaultSection();
+      if(state.roadLoading){
+        state.pendingDefaultReset = true;
+        setText("roadStatus", `Reset pending. Waiting for the ${town.defaultRoad.label} centerline to load.`);
+      }else defaultSection();
     });
     $("exportBtn").addEventListener("click", exportSections);
     $("screenshotBtn").addEventListener("click", downloadScreenshot);
@@ -6947,10 +7774,17 @@
       if(button.dataset.savedAction === "delete") deleteSavedLine(row.dataset.savedLineId);
     });
     $("applyThresholdBtn").addEventListener("click", () => setThreshold($("thresholdNumber").value));
+    $("thresholdNumber").addEventListener("input", event => {
+      event.currentTarget.dataset.thresholdDirty = "true";
+      setThresholdValidation();
+    });
     $("thresholdNumber").addEventListener("keydown", event => {
       if(event.key === "Enter") setThreshold(event.currentTarget.value);
     });
-    $("uncertaintyNumber").addEventListener("input", event => setUncertainty(event.target.value));
+    $("uncertaintyNumber").addEventListener("change", event => setUncertainty(event.target.value));
+    $("uncertaintyNumber").addEventListener("keydown", event => {
+      if(event.key === "Enter") setUncertainty(event.currentTarget.value);
+    });
     document.querySelectorAll("[data-threshold-level]").forEach(button => {
       button.addEventListener("click", () => setThresholdLevel(button.dataset.thresholdLevel));
     });
@@ -6972,6 +7806,10 @@
       if(event.key !== "Escape") return;
       const expandedPane = document.querySelector(".toolPane.isExpanded");
       if(expandedPane) togglePaneExpansion(expandedPane.id);
+      else if(state.drawMode){
+        setDrawMode(false);
+        $("drawBtn").focus({preventScroll:true});
+      }
     });
     let responsiveResizeFrame = 0;
     window.addEventListener("resize", () => {
@@ -6982,13 +7820,47 @@
       });
     }, { passive:true });
 
-    map.on("click", event => {
+    function handleMapInteraction(event){
+      // A second click from the same gesture must not place a point after the
+      // first click returned the viewport from a repeated map world.
+      const recovered = handleMapInteraction.recoveredWorldView;
+      const originalEvent = event.originalEvent;
+      const mapTouch = handleMapInteraction.lastTouch;
+      handleMapInteraction.lastTouch = null;
+      const sinceTouch = originalEvent?.timeStamp - mapTouch?.timeStamp;
+      const followsMapTouch = sinceTouch >= 0 && sinceTouch <= 200
+        && Math.hypot(originalEvent.clientX - mapTouch.x, originalEvent.clientY - mapTouch.y) <= (map.options.tapTolerance || 15);
+      const touch = originalEvent?.pointerType === "touch" || !!originalEvent?.sourceCapabilities?.firesTouchEvents || followsMapTouch;
+      const elapsed = originalEvent?.timeStamp - recovered?.timeStamp;
+      const sameTouch = recovered?.touch && touch && elapsed >= 0 && elapsed <= 200
+        && Math.hypot(originalEvent.clientX - recovered.x, originalEvent.clientY - recovered.y) <= (map.options.tapTolerance || 15);
+      if(recovered?.pending === state.pendingPoints && (originalEvent?.detail > 1 || sameTouch)) return;
+      handleMapInteraction.recoveredWorldView = null;
       if(!state.drawMode){
         const idx = nearestProfileIndex(event.latlng);
         if(idx !== null) selectProfileIndex(idx, true, true);
         return;
       }
       let point = event.latlng;
+      if(!isGeographicPoint(point)){
+        const bounds = state.metadata?.leafletBounds;
+        if(bounds){
+          // Match Leaflet's double-tap window/tolerance for engines that report
+          // two touch clicks with detail=1. A new location or key is new intent.
+          handleMapInteraction.recoveredWorldView = {pending:state.pendingPoints, touch,
+            x:originalEvent?.clientX, y:originalEvent?.clientY, timeStamp:originalEvent?.timeStamp};
+          map.fitBounds(L.latLngBounds(bounds).pad(.1), {animate:false});
+        }
+        setText("drawPromptText", bounds
+          ? `That point is outside the main map world. Returned the map to ${town.name}; your draft is unchanged.`
+          : "Choose a point in the main map world (latitude -90 to 90, longitude -180 to 180). Your draft is unchanged.");
+        return;
+      }
+      const previous = state.pendingPoints.at(-1);
+      if(previous && Math.abs(point.lng - previous.lng) > 180){
+        setText("drawPromptText", "Crossing the international date line is unsupported. Choose a point in the same map world; your draft is unchanged.");
+        return;
+      }
       if(state.drawingRoadSnapped){
         const route = traceRoadPoints([...state.pendingPoints, point]);
         if(!route || (state.pendingPoints.length && route.path.length < 2)){
@@ -7001,6 +7873,9 @@
           return;
         }
         state.pendingRoadRoute = route;
+      }else if(state.pendingPoints.length && map.distance(state.pendingPoints.at(-1),point) < .1){
+        setText("drawPromptText", "Choose a different point.");
+        return;
       }
       state.pendingPoints.push(point);
       const path = state.pendingRoadRoute?.path || state.pendingPoints;
@@ -7025,13 +7900,57 @@
         }
         $("finishDrawBtn").disabled = false;
         $("finishDrawBtn").title = "Finish the current line.";
-        setText("chartStatus", `${state.pendingPoints.length} vertices ready`);
         setText("drawPromptText", state.drawingRoadSnapped ? "Snapped to centerlines. Add another road point, or finish." : "Add another point, or finish this line.");
       }else{
-        setText("chartStatus", "Choose another point");
         setText("drawPromptText", state.drawingRoadSnapped ? "Point snapped to centerline. Add the next road point." : "Add the next point along the road.");
       }
+    }
+
+    function installVertexKeyboardControls(marker){
+      const element = marker.getElement();
+      element.setAttribute("aria-describedby", "mapKeyboardInstructions");
+      element.addEventListener("keydown", event => {
+        if((event.key === "Enter" || event.key === " ") && !state.drawMode && !activeRoadRiskDialog()){
+          event.preventDefault();
+          event.stopPropagation();
+          marker.fire("click", {originalEvent:event});
+          return;
+        }
+        const delta = {ArrowLeft:[-10,0], ArrowRight:[10,0], ArrowUp:[0,-10], ArrowDown:[0,10]}[event.key];
+        if(!delta || !event.shiftKey || event.altKey || event.ctrlKey || event.metaKey
+          || state.drawMode || activeRoadRiskDialog() || !state.markers.includes(marker)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        marker.fire("dragstart");
+        const position = map.latLngToContainerPoint(marker.getLatLng()).add(delta);
+        marker.setLatLng(map.containerPointToLatLng(position));
+        marker.fire("drag");
+        marker.fire("dragend");
+      });
+    }
+
+    map.on("click", handleMapInteraction);
+    map.getContainer().addEventListener("keydown", event => {
+      if(event.target !== map.getContainer()) return;
+      if(state.drawMode && ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Enter"].includes(event.key)){
+        map.getContainer().classList.add("keyboardDrawing");
+      }
+      if(event.key !== "Enter" || !state.drawMode) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if(!map._loaded){
+        setText("drawPromptText", "Map data is still loading. Wait before adding a point.");
+        return;
+      }
+      if(!event.repeat) handleMapInteraction({latlng:map.getCenter()});
     });
+    map.getContainer().addEventListener("pointerdown", () => map.getContainer().classList.remove("keyboardDrawing"));
+    map.getContainer().addEventListener("touchend", event => {
+      const touch = event.changedTouches[0];
+      if(touch && event.touches.length === 0){
+        handleMapInteraction.lastTouch = {x:touch.clientX, y:touch.clientY, timeStamp:event.timeStamp};
+      }
+    }, {capture:true, passive:true});
 
     renderChart([]);
     updateStats([]);
@@ -7044,12 +7963,11 @@
       renderChart(state.profile);
     });
     loadSavedLines();
-    loadRoadCenterlines();
-    loadApp().catch(err => {
+    initializeProfiles().catch(err => {
       console.error(err);
-      setReady(false, "Unavailable");
-      setText("chartStatus", "DEM failed to load");
+      setReady(false, "Road Risk data unavailable. Reload to retry.");
     });
+    document.documentElement.dataset.roadRiskInitialized = "true";
   </script>
 </body>
 </html>
