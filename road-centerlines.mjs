@@ -15,32 +15,64 @@ export function buildRoadNetwork(collection, {contains=null}={}){
     if(!nodes.has(id)) nodes.set(id, {coordinate:coordinate.slice(0,2), links:[]});
     return id;
   }
+  const roadParts = [];
   for(const [featureIndex, feature] of collection.features.entries()){
     const geometry = feature.geometry;
     const parts = geometry?.type === 'LineString' ? [geometry.coordinates]
       : geometry?.type === 'MultiLineString' ? geometry.coordinates : [];
     for(const [partIndex, coordinates] of parts.entries()){
       if(coordinates.length < 2 || coordinates.some(p => !Number.isFinite(p[0]) || !Number.isFinite(p[1]))) continue;
-      const ids = coordinates.map((p,i) => {
-        // Connect only source endpoints, not arbitrary crossing/bridge vertices.
-        const endpoint = i === 0 || i === coordinates.length-1;
-        const level = i === 0 ? feature.properties?.ELEVTYP_F : feature.properties?.ELEVTYP_T;
-        const clipped = i===0 ? feature.properties?.CLIPPED_F : feature.properties?.CLIPPED_T;
-        const id = endpoint && clipped ? `clip:${featureIndex}:${partIndex}:${i}`
-          : endpoint ? `${p[0].toFixed(7)},${p[1].toFixed(7)},${level ?? 0}`
-          : `shape:${featureIndex}:${partIndex}:${i}`;
-        return addNode(id, p);
+      roadParts.push({
+        coordinates, partId:`${featureIndex}:${partIndex}`,
+        name:feature.properties?.PRIMENAME || 'Road',
+        fromLevel:feature.properties?.ELEVTYP_F, toLevel:feature.properties?.ELEVTYP_T,
+        fromClipped:feature.properties?.CLIPPED_F, toClipped:feature.properties?.CLIPPED_T
       });
-      for(let i=1; i<coordinates.length; i++){
-        const a = project(coordinates[i-1]), b = project(coordinates[i]);
-        const length = distance(a,b);
-        const edge = {a,b,length,from:ids[i-1],to:ids[i],name:feature.properties?.PRIMENAME || 'Road'};
-        // Repeated and very close vertices still connect consecutive source
-        // nodes. Only zero-length geometry is excluded from snap projection.
-        nodes.get(edge.from).links.push({id:edge.to,length});
-        nodes.get(edge.to).links.push({id:edge.from,length});
-        if(length > 0) edges.push(edge);
+    }
+  }
+
+  const exactCoordinateKey = p => `${p[0]},${p[1]}`;
+  const endpointId = (p, level) => `${p[0].toFixed(7)},${p[1].toFixed(7)},${level ?? 0}`;
+  const atGradeEndpoints = new Map();
+  for(const part of roadParts){
+    const {coordinates, fromLevel, toLevel, fromClipped, toClipped} = part;
+    for(const [point, level, clipped] of [
+      [coordinates[0], fromLevel, fromClipped],
+      [coordinates.at(-1), toLevel, toClipped]
+    ]){
+      if(level !== 0 || clipped) continue;
+      const key = exactCoordinateKey(point);
+      if(!atGradeEndpoints.has(key)) atGradeEndpoints.set(key, new Set());
+      atGradeEndpoints.get(key).add(part);
+    }
+  }
+
+  for(const part of roadParts){
+    const {coordinates, partId, name, fromLevel, toLevel, fromClipped, toClipped} = part;
+    const ids = coordinates.map((p,i) => {
+      if(i === 0 || i === coordinates.length-1){
+        const level = i === 0 ? fromLevel : toLevel;
+        const clipped = i === 0 ? fromClipped : toClipped;
+        return addNode(clipped ? `clip:${partId}:${i}` : endpointId(p, level), p);
       }
+      // A source road can end exactly at an interior vertex of a through
+      // road. Join there only when the through road and the other endpoint
+      // are explicitly at grade. Shape-only crossings keep private nodes.
+      if(fromLevel === 0 && toLevel === 0){
+        const endpoints = atGradeEndpoints.get(exactCoordinateKey(p));
+        if(endpoints && (endpoints.size > 1 || !endpoints.has(part))) return addNode(endpointId(p, 0), p);
+      }
+      return addNode(`shape:${partId}:${i}`, p);
+    });
+    for(let i=1; i<coordinates.length; i++){
+      const a = project(coordinates[i-1]), b = project(coordinates[i]);
+      const length = distance(a,b);
+      const edge = {a,b,length,from:ids[i-1],to:ids[i],name};
+      // Repeated and very close vertices still connect consecutive source
+      // nodes. Only zero-length geometry is excluded from snap projection.
+      nodes.get(edge.from).links.push({id:edge.to,length});
+      nodes.get(edge.to).links.push({id:edge.from,length});
+      if(length > 0) edges.push(edge);
     }
   }
   if(!edges.length) throw new Error('No usable road segments');

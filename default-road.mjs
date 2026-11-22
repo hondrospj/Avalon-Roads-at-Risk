@@ -1,4 +1,4 @@
-import { buildRoadNetwork } from './road-centerlines.mjs?v=topology-2';
+import { buildRoadNetwork } from './road-centerlines.mjs?v=topology-3';
 
 // Named anchors can constrain the default to its own road instead of taking a
 // detour. Towns with a cross-street route use the municipal network as-is.

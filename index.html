@@ -4064,9 +4064,9 @@
   </script>
   <script type="module">
     import * as GeoTIFF from "https://cdn.jsdelivr.net/npm/geotiff@2.1.3/+esm";
-    import { buildRoadNetwork } from "./road-centerlines.mjs?v=topology-2";
+    import { buildRoadNetwork } from "./road-centerlines.mjs?v=topology-3";
     import { municipalRoads } from "./municipal-roads.mjs?v=boundary-index-2";
-    import { selectDefaultRoadProfile } from "./default-road.mjs?v=town-anchors-1";
+    import { selectDefaultRoadProfile } from "./default-road.mjs?v=town-anchors-2";
     import { configuredMllwOffset, analyzeProfile } from "./profile-math.mjs?v=calculation-fixes-1";
     import { encodeDbfText } from "./shapefile-text.mjs?v=utf8-1";
     import { town } from "./town-config.mjs";
@@ -4124,6 +4124,7 @@
       selectedIndex:null,
       thresholdFt:null,
       uncertaintyFt:.5,
+      uncertaintyApplied:false,
       datum:"navd88",
       profileXZoom:null,
       profileYZoom:null,
@@ -7120,6 +7121,12 @@
       return points == null || (Array.isArray(points) && !points.length) ? [line.a, line.b] : points;
     }
 
+    function sameRoutePoints(points, reference, tolerance=0){
+      return Array.isArray(points) && Array.isArray(reference) && points.length === reference.length
+        && points.every((point, index) => Math.abs(point.lat - reference[index]?.lat) <= tolerance
+          && Math.abs(point.lng - reference[index]?.lng) <= tolerance);
+    }
+
     function savedVertexDistances(path, controls){
       if(!Array.isArray(controls) || controls.length < 2 || controls.some(point => !isGeographicPoint(point))) return null;
       const last = path.length - 1;
@@ -7214,12 +7221,10 @@
       const sourceId = state.activeSavedSourceId || state.activeSavedLineId;
       if(!sourceId) return;
       const source = state.savedLines.find(line => line.id === sourceId);
-      const points = currentLineLatLngs();
       const savedPoints = source ? savedRoutePoints(source) : [];
-      const unchanged = Array.isArray(savedPoints) && points?.length === savedPoints.length && points.every((point, index) => {
-        const saved = savedPoints[index];
-        return saved && Math.abs(point.lat - saved.lat) < 1e-10 && Math.abs(point.lng - saved.lng) < 1e-10;
-      });
+      const savedControls = source?.controlPoints === undefined ? savedPoints : source.controlPoints;
+      const unchanged = sameRoutePoints(currentLineLatLngs(), savedPoints, 1e-10)
+        && sameRoutePoints(currentLineControls(), savedControls, 1e-10);
       state.activeSavedSourceId = source?.id || null;
       const activeId = unchanged ? source.id : null;
       if(state.activeSavedLineId !== activeId){
@@ -7523,12 +7528,9 @@
         vertexDistances:state.activeVertexDistances.slice(),
         createdAt:new Date().toISOString()
       };
-      const selectSavedLine = () => {
-        const current = currentLineLatLngs();
-        return state.line === displayedLine && state.activeSavedLineId === previousActiveId && current?.length === line.points.length
-          && current.every((point, index) => point.lat === line.points[index].lat && point.lng === line.points[index].lng)
-          ? id : state.activeSavedLineId;
-      };
+      const selectSavedLine = () => state.line === displayedLine && state.activeSavedLineId === previousActiveId
+        && sameRoutePoints(currentLineLatLngs(), line.points)
+        && sameRoutePoints(currentLineControls(), line.controlPoints) ? id : state.activeSavedLineId;
       if(!await persistSavedLines({line, nextActiveId:selectSavedLine})){
         setExportStatus("Could not save this line. Browser storage is full or unavailable; existing saved lines are unchanged. Export your profiles to keep a copy, then free storage or enable it and retry.");
         return;
@@ -7574,12 +7576,18 @@
       const stats = state.floodStats;
       if(!stats) return;
       const uncertaintyInput = $("uncertaintyNumber");
-      if(uncertaintyInput){
+      if(uncertaintyInput && !state.uncertaintyApplied){
         const uncertainty = stats.verticalUncertaintyFt;
-        uncertaintyInput.value = (Number.isFinite(uncertainty) ? uncertainty : state.uncertaintyFt).toFixed(2);
-        state.uncertaintyFt = Number(uncertaintyInput.value);
+        const value = (Number.isFinite(uncertainty) ? uncertainty : state.uncertaintyFt).toFixed(2);
+        state.uncertaintyFt = Number(value);
+        if(!uncertaintyInput.dataset.uncertaintyDirty) uncertaintyInput.value = value;
       }
       updateThresholdControls();
+    }
+
+    function thresholdDisplayBounds(){
+      // Remove subtraction noise from the paired datum stages at the input bounds.
+      return [-2, 14].map(stage => Number(toDisplayDatum(stage).toFixed(10)));
     }
 
     function updateThresholdControls(){
@@ -7592,8 +7600,9 @@
           number.dataset.thresholdAppliedDatum = activeDatum();
         }
         number.setAttribute("aria-label", `Custom stage in feet ${datumLabel()}`);
-        number.min = String(toDisplayDatum(-2));
-        number.max = String(toDisplayDatum(14));
+        const [min, max] = thresholdDisplayBounds();
+        number.min = String(min);
+        number.max = String(max);
       }
       setText("thresholdPill", `${Number.isFinite(displayValue) ? displayValue.toFixed(2) : "-"} ft ${datumLabel()}`);
       const thresholds = activeDatumThresholds();
@@ -7635,6 +7644,13 @@
         setThresholdValidation("Enter a numeric water stage before applying it.");
         return;
       }
+      if(typeof value === "string" && !unchanged){
+        const [min, max] = thresholdDisplayBounds();
+        if(Number(value) < min || Number(value) > max){
+          setThresholdValidation(`Enter a water stage from ${min} to ${max} ft ${datumLabel()}.`);
+          return;
+        }
+      }
       setThresholdValidation();
       if(number) delete number.dataset.thresholdDirty;
       state.thresholdFt = clamp(next, -2, 14);
@@ -7671,10 +7687,12 @@
       const input = $("uncertaintyNumber");
       const parsed = typeof value === "number" ? value
         : typeof value === "string" && value.trim() ? Number(value) : NaN;
+      delete input.dataset.uncertaintyDirty;
       if(!Number.isFinite(parsed)){
         input.value = state.uncertaintyFt.toFixed(2);
         return false;
       }
+      state.uncertaintyApplied = true;
       const next = Number(clamp(parsed, 0, 3).toFixed(2));
       input.value = next.toFixed(2);
       if(next !== state.uncertaintyFt){
@@ -7780,6 +7798,9 @@
     });
     $("thresholdNumber").addEventListener("keydown", event => {
       if(event.key === "Enter") setThreshold(event.currentTarget.value);
+    });
+    $("uncertaintyNumber").addEventListener("input", event => {
+      event.currentTarget.dataset.uncertaintyDirty = "true";
     });
     $("uncertaintyNumber").addEventListener("change", event => setUncertainty(event.target.value));
     $("uncertaintyNumber").addEventListener("keydown", event => {
